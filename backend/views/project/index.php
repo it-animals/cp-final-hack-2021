@@ -64,7 +64,17 @@ $this->params['breadcrumbs'][] = $this->title;
                     return $certifications[$model->certification];
                 },
                 'filter' => $certifications
-            ],            
+            ],
+            [
+                'label' => 'Теги',
+                'value' => function(Project $model)  {
+                    $list = [];
+                    foreach($model->tags as $tag) {
+                        $list[] = $tag->name;
+                    }
+                    return implode(' ', $list);
+                },
+            ],
         ],
     ]); ?>
 

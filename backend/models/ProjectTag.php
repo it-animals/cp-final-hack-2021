@@ -69,4 +69,29 @@ class ProjectTag extends \yii\db\ActiveRecord
     {
         return $this->hasOne(Tag::class, ['id' => 'tag_id']);
     }
+    /**
+     * Удалить все теги проекта
+     * @param Project $project проект
+     * @return int
+     */
+    public static function deleteAllByProject(Project $project) {
+        return self::deleteAll(['project_id' => $project->id]);
+    }
+    
+    /**
+     * Добавляет тег к проекту
+     * @param Project $project Проект
+     * @param Tag $tag Тег
+     * @return ProjectTag
+     */
+    public static function addToProject(Project $project, Tag $tag): ProjectTag {
+        $model = self::findOne(['project_id' => $project->id, 'tag_id' => $tag->id]);
+        if(!$model) {
+            $model = new ProjectTag();
+            $model->project_id = $project->id;
+            $model->tag_id = $tag->id;
+            $model->save();
+        }
+        return $model;
+    }
 }

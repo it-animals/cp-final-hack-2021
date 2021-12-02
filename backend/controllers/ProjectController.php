@@ -103,6 +103,11 @@ class ProjectController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
+        $tags = [];
+        foreach($model->tags as $tag) {
+            $tags[] = $tag->name;
+        }
+        $model->tagsRaw = implode(' ', $tags);
 
         if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);

@@ -65,4 +65,20 @@ class Tag extends \yii\db\ActiveRecord
     {
         return $this->hasMany(RequestTag::class, ['tag_id' => 'id']);
     }
+    
+    /**
+     * Найти или создать тег
+     * @param string $name наименование
+     * @return Tag
+     */
+    public static function findOrCreate(string $name): Tag {
+        $name = mb_strtolower(trim($name), 'UTF-8');
+        $tag = self::findOne(['name' => $name]);
+        if(!$tag) {
+            $tag = new Tag();
+            $tag->name = $name;
+            $tag->save();
+        }
+        return $tag;
+    }
 }

@@ -32,7 +32,9 @@ $this->params['breadcrumbs'][] = $this->title;
 
         <?= $form->field($model, 'for_transport')->dropDownList($transports) ?>
 
-        <?= $form->field($model, 'certification')->dropDownList($certifications) ?>               
+        <?= $form->field($model, 'certification')->dropDownList($certifications) ?>
+        
+        <?= $form->field($model, 'tagsRaw')->textarea(['rows' => 3]) ?>
 
         <?= $form->field($model, 'cases')->widget(CKeditor::class, [
             'options' => ['rows' => 6],

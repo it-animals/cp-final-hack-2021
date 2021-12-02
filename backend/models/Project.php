@@ -1,6 +1,8 @@
 <?php
 
 namespace app\models;
+use app\models\Tag;
+use app\models\ProjectTag;
 
 use Yii;
 
@@ -19,10 +21,13 @@ use Yii;
  *
  * @property ProjectFile[] $projectFiles
  * @property ProjectTag[] $projectTags
+ * @property Tag[] $tags
  * @property Team[] $teams
  */
 class Project extends \yii\db\ActiveRecord
 {
+    public $tagsRaw;
+    
     const STATUS_IDEA = 1;
     const STATUS_PROTOTYPE = 2;
     const STATUS_PRODUCT = 3;
@@ -61,9 +66,25 @@ class Project extends \yii\db\ActiveRecord
             [['type'], 'in', 'range' => array_keys($types)],
             [['for_transport'], 'in', 'range' => array_keys($transports)],
             [['certification'], 'in', 'range' => array_keys($certifications)],
-            [['name'], 'string', 'max' => 200],
+            [['name'], 'string', 'max' => 200],            
             [['name'], 'unique'],
+            [['tagsRaw'], 'string', 'max' => 1000],
         ];
+    }
+    
+    public function afterSave($insert, $changedAttributes) {
+        parent::afterSave($insert, $changedAttributes);
+        
+        ProjectTag::deleteAllByProject($this);
+        if($this->tagsRaw) {
+            $tagsRaw = preg_replace("/[^а-яёa-z0-9 ]/ui", '', $this->tagsRaw);            
+            $tagsRaw = preg_replace("/ +/ui", ' ', $tagsRaw);
+            $tags = explode(' ', $tagsRaw);
+            foreach($tags as $tagName) {
+                $tag = Tag::findOrCreate($tagName);
+                $ptag = ProjectTag::addToProject($this, $tag);                
+            }            
+        }
     }
 
     /**
@@ -81,6 +102,7 @@ class Project extends \yii\db\ActiveRecord
             'type' => 'Тип',
             'for_transport' => 'Для какой организации',
             'certification' => 'Сертификация',
+            'tagsRaw' => 'Теги'
         ];
     }
 
@@ -102,6 +124,10 @@ class Project extends \yii\db\ActiveRecord
     public function getProjectTags()
     {
         return $this->hasMany(ProjectTag::class, ['project_id' => 'id']);
+    }
+    
+    public function getTags() {
+        return $this->hasMany(Tag::class, ['id' => 'tag_id'])->via('projectTags')->orderBy('name');
     }
 
     /**
