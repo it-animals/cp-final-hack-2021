@@ -20,6 +20,9 @@ class m211202_134824_create_user_table extends Migration
             'role' => $this->smallInteger()->notNull(),
             'password' => $this->string(1000),
         ]);
+        
+        $this->createIndex('idx_user_email', 'user', 'email');
+        $this->createIndex('idx_user_fio', 'user', 'fio');
     }
 
     /**

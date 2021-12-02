@@ -16,7 +16,7 @@ class m211202_135324_create_team_table extends Migration
             'id' => $this->primaryKey(),
             'project_id' => $this->integer()->notNull(),
             'user_id' => $this->integer()->notNull(),
-            'owner' => $this->boolean()->notNull(),
+            'is_owner' => $this->boolean()->notNull(),
         ]);
 
         $this->addForeignKey('fk_team_project_id', 'team', 'project_id', 'project', 'id', 'CASCADE', 'CASCADE');
