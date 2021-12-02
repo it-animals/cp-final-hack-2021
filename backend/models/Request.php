@@ -5,24 +5,24 @@ namespace app\models;
 use Yii;
 
 /**
- * This is the model class for table "team".
+ * This is the model class for table "request".
  *
  * @property int $id
- * @property int $project_id
  * @property int $user_id
- * @property bool $is_owner
+ * @property string $name
+ * @property string|null $descr
  *
- * @property Project $project
+ * @property RequestTag[] $requestTags
  * @property User $user
  */
-class Team extends \yii\db\ActiveRecord
+class Request extends \yii\db\ActiveRecord
 {
     /**
      * {@inheritdoc}
      */
     public static function tableName()
     {
-        return 'team';
+        return 'request';
     }
 
     /**
@@ -31,11 +31,11 @@ class Team extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['project_id', 'user_id', 'is_owner'], 'required'],
-            [['project_id', 'user_id'], 'default', 'value' => null],
-            [['project_id', 'user_id'], 'integer'],
-            [['is_owner'], 'boolean'],
-            [['project_id'], 'exist', 'skipOnError' => true, 'targetClass' => Project::className(), 'targetAttribute' => ['project_id' => 'id']],
+            [['user_id', 'name'], 'required'],
+            [['user_id'], 'default', 'value' => null],
+            [['user_id'], 'integer'],
+            [['descr'], 'string'],
+            [['name'], 'string', 'max' => 200],
             [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['user_id' => 'id']],
         ];
     }
@@ -47,20 +47,20 @@ class Team extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'project_id' => 'Project ID',
             'user_id' => 'User ID',
-            'is_owner' => 'Is Owner',
+            'name' => 'Name',
+            'descr' => 'Descr',
         ];
     }
 
     /**
-     * Gets query for [[Project]].
+     * Gets query for [[RequestTags]].
      *
      * @return \yii\db\ActiveQuery
      */
-    public function getProject()
+    public function getRequestTags()
     {
-        return $this->hasOne(Project::className(), ['id' => 'project_id']);
+        return $this->hasMany(RequestTag::className(), ['request_id' => 'id']);
     }
 
     /**

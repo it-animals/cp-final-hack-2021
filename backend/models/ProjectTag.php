@@ -5,24 +5,23 @@ namespace app\models;
 use Yii;
 
 /**
- * This is the model class for table "team".
+ * This is the model class for table "project_tag".
  *
  * @property int $id
  * @property int $project_id
- * @property int $user_id
- * @property bool $is_owner
+ * @property int $tag_id
  *
  * @property Project $project
- * @property User $user
+ * @property Tag $tag
  */
-class Team extends \yii\db\ActiveRecord
+class ProjectTag extends \yii\db\ActiveRecord
 {
     /**
      * {@inheritdoc}
      */
     public static function tableName()
     {
-        return 'team';
+        return 'project_tag';
     }
 
     /**
@@ -31,12 +30,11 @@ class Team extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['project_id', 'user_id', 'is_owner'], 'required'],
-            [['project_id', 'user_id'], 'default', 'value' => null],
-            [['project_id', 'user_id'], 'integer'],
-            [['is_owner'], 'boolean'],
+            [['project_id', 'tag_id'], 'required'],
+            [['project_id', 'tag_id'], 'default', 'value' => null],
+            [['project_id', 'tag_id'], 'integer'],
             [['project_id'], 'exist', 'skipOnError' => true, 'targetClass' => Project::className(), 'targetAttribute' => ['project_id' => 'id']],
-            [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['user_id' => 'id']],
+            [['tag_id'], 'exist', 'skipOnError' => true, 'targetClass' => Tag::className(), 'targetAttribute' => ['tag_id' => 'id']],
         ];
     }
 
@@ -48,8 +46,7 @@ class Team extends \yii\db\ActiveRecord
         return [
             'id' => 'ID',
             'project_id' => 'Project ID',
-            'user_id' => 'User ID',
-            'is_owner' => 'Is Owner',
+            'tag_id' => 'Tag ID',
         ];
     }
 
@@ -64,12 +61,12 @@ class Team extends \yii\db\ActiveRecord
     }
 
     /**
-     * Gets query for [[User]].
+     * Gets query for [[Tag]].
      *
      * @return \yii\db\ActiveQuery
      */
-    public function getUser()
+    public function getTag()
     {
-        return $this->hasOne(User::className(), ['id' => 'user_id']);
+        return $this->hasOne(Tag::className(), ['id' => 'tag_id']);
     }
 }

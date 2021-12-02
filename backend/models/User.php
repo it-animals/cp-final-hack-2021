@@ -20,6 +20,18 @@ use yii\db\ActiveRecord;
 class User extends ActiveRecord
 {
     /**
+     * Администратор
+     */
+    const ROLE_ADMIN = 1;
+    /**
+     * Представитель организаций транспорта Москвы
+     */
+    const ROLE_MT = 2;
+    /**
+     * Участник
+     */
+    const ROLE_USER = 3;
+    /**
      * {@inheritdoc}
      */
     public static function tableName()
@@ -32,10 +44,12 @@ class User extends ActiveRecord
      */
     public function rules()
     {
+        $roles = self::getRoleList();
         return [
             [['email', 'fio', 'role'], 'required'],
             [['role'], 'default', 'value' => null],
             [['role'], 'integer'],
+            [['role'], 'in', 'range' => array_keys($roles)],
             [['avatar'], 'string'],
             [['email', 'password'], 'string', 'max' => 1000],
             [['fio'], 'string', 'max' => 100],
@@ -66,5 +80,13 @@ class User extends ActiveRecord
     public function getTeams()
     {
         return $this->hasMany(Team::class, ['user_id' => 'id']);
+    }
+    
+    public static function getRoleList(): array {
+        return [
+            self::ROLE_ADMIN => 'Администратор',
+            self::ROLE_MT => 'Представитель транспорта Москвы',
+            self::ROLE_USER => 'Участник'
+        ];
     }
 }
