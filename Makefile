@@ -1,3 +1,4 @@
+init: down-clear up install-dependencies migrate create-admin
 restart: down up
 up:
 	cd backend && docker-compose up -d
@@ -17,5 +18,5 @@ update-dependencies:
 	cd backend && docker-compose exec php composer update
 migrate:
 	cd backend && docker-compose exec php php yii migrate --interactive=0
-#www-data:
-#	chown $(USER):www-data backend backend/vendor
+create-admin:
+	cd backend && docker-compose exec php php yii tool/create-admin test@test.org test123
