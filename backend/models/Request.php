@@ -36,7 +36,7 @@ class Request extends \yii\db\ActiveRecord
             [['user_id'], 'integer'],
             [['descr'], 'string'],
             [['name'], 'string', 'max' => 200],
-            [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['user_id' => 'id']],
+            [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['user_id' => 'id']],
         ];
     }
 
@@ -46,10 +46,10 @@ class Request extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id' => 'ID',
-            'user_id' => 'User ID',
-            'name' => 'Name',
-            'descr' => 'Descr',
+            'id' => 'Код',
+            'user_id' => 'Пользователь',
+            'name' => 'Наименование',
+            'descr' => 'Описание',
         ];
     }
 
@@ -60,7 +60,7 @@ class Request extends \yii\db\ActiveRecord
      */
     public function getRequestTags()
     {
-        return $this->hasMany(RequestTag::className(), ['request_id' => 'id']);
+        return $this->hasMany(RequestTag::class, ['request_id' => 'id']);
     }
 
     /**

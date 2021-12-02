@@ -41,8 +41,8 @@ class Tag extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id' => 'ID',
-            'name' => 'Name',
+            'id' => 'Код',
+            'name' => 'Наименование',
         ];
     }
 
@@ -53,7 +53,7 @@ class Tag extends \yii\db\ActiveRecord
      */
     public function getProjectTags()
     {
-        return $this->hasMany(ProjectTag::className(), ['tag_id' => 'id']);
+        return $this->hasMany(ProjectTag::class, ['tag_id' => 'id']);
     }
 
     /**
@@ -63,6 +63,6 @@ class Tag extends \yii\db\ActiveRecord
      */
     public function getRequestTags()
     {
-        return $this->hasMany(RequestTag::className(), ['tag_id' => 'id']);
+        return $this->hasMany(RequestTag::class, ['tag_id' => 'id']);
     }
 }

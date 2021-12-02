@@ -33,8 +33,8 @@ class RequestTag extends \yii\db\ActiveRecord
             [['request_id', 'tag_id'], 'required'],
             [['request_id', 'tag_id'], 'default', 'value' => null],
             [['request_id', 'tag_id'], 'integer'],
-            [['request_id'], 'exist', 'skipOnError' => true, 'targetClass' => Request::className(), 'targetAttribute' => ['request_id' => 'id']],
-            [['tag_id'], 'exist', 'skipOnError' => true, 'targetClass' => Tag::className(), 'targetAttribute' => ['tag_id' => 'id']],
+            [['request_id'], 'exist', 'skipOnError' => true, 'targetClass' => Request::class, 'targetAttribute' => ['request_id' => 'id']],
+            [['tag_id'], 'exist', 'skipOnError' => true, 'targetClass' => Tag::class, 'targetAttribute' => ['tag_id' => 'id']],
         ];
     }
 
@@ -44,9 +44,9 @@ class RequestTag extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id' => 'ID',
-            'request_id' => 'Request ID',
-            'tag_id' => 'Tag ID',
+            'id' => 'Код',
+            'request_id' => 'Запрос',
+            'tag_id' => 'Тег',
         ];
     }
 
@@ -57,7 +57,7 @@ class RequestTag extends \yii\db\ActiveRecord
      */
     public function getRequest()
     {
-        return $this->hasOne(Request::className(), ['id' => 'request_id']);
+        return $this->hasOne(Request::class, ['id' => 'request_id']);
     }
 
     /**
@@ -67,6 +67,6 @@ class RequestTag extends \yii\db\ActiveRecord
      */
     public function getTag()
     {
-        return $this->hasOne(Tag::className(), ['id' => 'tag_id']);
+        return $this->hasOne(Tag::class, ['id' => 'tag_id']);
     }
 }

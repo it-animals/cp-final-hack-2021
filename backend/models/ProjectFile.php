@@ -36,7 +36,7 @@ class ProjectFile extends \yii\db\ActiveRecord
             [['project_id'], 'integer'],
             [['content'], 'string'],
             [['name', 'extension'], 'string', 'max' => 1000],
-            [['project_id'], 'exist', 'skipOnError' => true, 'targetClass' => Project::className(), 'targetAttribute' => ['project_id' => 'id']],
+            [['project_id'], 'exist', 'skipOnError' => true, 'targetClass' => Project::class, 'targetAttribute' => ['project_id' => 'id']],
         ];
     }
 
@@ -46,10 +46,10 @@ class ProjectFile extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id' => 'ID',
-            'project_id' => 'Project ID',
-            'name' => 'Name',
-            'extension' => 'Extension',
+            'id' => 'ИД',
+            'project_id' => 'Проект',
+            'name' => 'Наименование',
+            'extension' => 'Расширение',
             'content' => 'Content',
         ];
     }
@@ -61,6 +61,6 @@ class ProjectFile extends \yii\db\ActiveRecord
      */
     public function getProject()
     {
-        return $this->hasOne(Project::className(), ['id' => 'project_id']);
+        return $this->hasOne(Project::class, ['id' => 'project_id']);
     }
 }
