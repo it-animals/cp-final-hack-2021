@@ -76,7 +76,7 @@ class Project extends \yii\db\ActiveRecord
             'name' => 'Наименование',
             'descr' => 'Описание',
             'cases' => 'Кейсы',
-            'profit' => 'Profit',
+            'profit' => 'Польза',
             'status' => 'Статус',
             'type' => 'Тип',
             'for_transport' => 'Для какой организации',
