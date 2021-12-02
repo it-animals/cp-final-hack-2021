@@ -19,15 +19,6 @@ class ToolController extends Controller
         $user->role = 1;
         $user->save();
 
-        /**
-         *         11. role — smallint not null:
-        1. администратор;
-        2. внутренний эксперт;
-        3. внешний эксперт;
-        4. представитель московского транспорта;
-        5. участник;
-         */
-
         return ExitCode::OK;
     }
 }
