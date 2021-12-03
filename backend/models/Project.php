@@ -122,6 +122,11 @@ class Project extends \yii\db\ActiveRecord
         return $this->hasMany(ProjectFile::class, ['project_id' => 'id']);
     }
 
+    public function getProjectRequests()
+    {
+        return $this->hasMany(Request::class, ['project_id' => 'id']);
+    }
+
     /**
      * Gets query for [[ProjectTags]].
      *
@@ -188,7 +193,7 @@ class Project extends \yii\db\ActiveRecord
 
     public function extraFields()
     {
-        return ['tags', 'projectFiles', 'teams'];
+        return ['tags', 'projectFiles', 'teams', 'projectRequests'];
     }
     
     public static function getList(): array {
