@@ -8,6 +8,7 @@ use app\models\RequestSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\filters\AccessControl;
 
 /**
  * RequestController implements the CRUD actions for Request model.
@@ -26,6 +27,15 @@ class RequestController extends Controller
                     'class' => VerbFilter::className(),
                     'actions' => [
                         'delete' => ['POST'],
+                    ],
+                ],
+                'accesses' => [
+                    'class' => AccessControl::class,
+                    'rules' => [
+                        [
+                            'allow' => true,                            
+                            'roles' => ['@'],
+                        ],
                     ],
                 ],
             ]

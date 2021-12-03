@@ -8,6 +8,7 @@ use app\models\TeamSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\filters\AccessControl;
 
 /**
  * TeamController implements the CRUD actions for Team model.
@@ -26,6 +27,15 @@ class TeamController extends Controller
                     'class' => VerbFilter::class,
                     'actions' => [
                         'delete' => ['POST'],
+                    ],
+                ],
+                'accesses' => [
+                    'class' => AccessControl::class,
+                    'rules' => [
+                        [
+                            'allow' => true,                            
+                            'roles' => ['@'],
+                        ],
                     ],
                 ],
             ]

@@ -7,6 +7,7 @@ use app\models\TagSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\filters\AccessControl;
 
 /**
  * TagController implements the CRUD actions for Tag model.
@@ -25,6 +26,15 @@ class TagController extends Controller
                     'class' => VerbFilter::class,
                     'actions' => [
                         'delete' => ['POST'],
+                    ],
+                ],
+                'accesses' => [
+                    'class' => AccessControl::class,
+                    'rules' => [
+                        [
+                            'allow' => true,                            
+                            'roles' => ['@'],
+                        ],
                     ],
                 ],
             ]

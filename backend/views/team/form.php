@@ -8,7 +8,7 @@ use yii\widgets\ActiveForm;
 /* @var $form yii\widgets\ActiveForm */
 /* @var $users array */
 
-$this->title = $model->isNewRecord ? 'Добавить участника' : 'Изменить участника';
+$this->title = $model->isNewRecord ? 'Добавить контакты' : 'Изменить контакты';
 $this->params['breadcrumbs'][] = ['label' => 'Стартапы', 'url' => ['project/index']];
 $this->params['breadcrumbs'][] = ['label' => $model->project->name, 'url' => ['project/view', 'id' => $model->project->id]];
 $this->params['breadcrumbs'][] = $this->title;

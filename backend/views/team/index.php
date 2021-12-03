@@ -11,7 +11,7 @@ use app\models\Team;
 ?>
 <div class="team-index">
 
-    <h1><?= Html::encode('Команда') ?></h1>
+    <h1><?= Html::encode('Контакты') ?></h1>
 
     <p>
         <?= Html::a('Добавить', ['/team/create', 'projectId' => $searchModel->project_id], ['class' => 'btn btn-success']) ?>
