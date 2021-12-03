@@ -1,5 +1,7 @@
-init: down-clear up install-dependencies migrate create-admin
+init: down-clear build up install-dependencies migrate create-admin set-permissions
 restart: down up
+build:
+	cd backend && docker-compose build
 up:
 	cd backend && docker-compose up -d
 down:
@@ -20,3 +22,5 @@ migrate:
 	cd backend && docker-compose exec php php yii migrate --interactive=0
 create-admin:
 	cd backend && docker-compose exec php php yii tool/create-admin test@test.org test123
+set-permissions:
+	cd backend && chmod 0775 files && chown $(USER):www-data files

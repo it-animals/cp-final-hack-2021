@@ -7,20 +7,24 @@ use yii\web\Controller;
 use yii\web\Response;
 
 /**
- * Default controller for the `v1` module
+ * @OA\Info(
+ *   title="INNO TECH",
+ *   version="1.0.0",
+ *   @OA\Contact(
+ *     email="support@example.com"
+ *   ),
+ * ),
+ * @OA\SecurityScheme(
+ *   securityScheme="bearerAuth",
+ *   in="header",
+ *   name="bearerAuth",
+ *   type="http",
+ *   scheme="bearer",
+ *   bearerFormat="JWT",
+ * ),
  */
 class DefaultController extends Controller
 {
-    public function behaviors()
-    {
-        $behaviors = parent::behaviors();
-        $behaviors['contentNegotiator']['formats']['text/html'] = Response::FORMAT_JSON;
-        return $behaviors;
-    }
-
-    /**
-     * @return Response
-     */
     public function actionIndex(): Response
     {
         return $this->asJson(['api' => 'v1']);

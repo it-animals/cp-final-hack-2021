@@ -23,6 +23,10 @@ export const GlobalStyle = createGlobalStyle`
     box-sizing: border-box;
   }
   a{
-    text-decoration: none;
+    text-decoration: none !important;
+  }
+  
+  .MuiPopover-paper{
+    box-shadow: none !important;
   }
 `;
