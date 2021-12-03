@@ -10,9 +10,10 @@ use app\models\Project;
 /* @var $types array */
 /* @var $transports array */
 /* @var $certifications array */
+/* @var $projectFileContent string */
 
 $this->title = $model->name;
-$this->params['breadcrumbs'][] = ['label' => 'Проекты', 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => 'Стартапы', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 \yii\web\YiiAsset::register($this);
 ?>
@@ -77,3 +78,4 @@ $this->params['breadcrumbs'][] = $this->title;
     ]) ?>
 
 </div>
+<?= $projectFileContent ?>
