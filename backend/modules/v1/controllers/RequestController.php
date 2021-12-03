@@ -37,6 +37,15 @@ class RequestController extends Controller
      *   path="/v1/request/index",
      *   security={{"bearerAuth"={}}},
      *   summary="",
+     *   @OA\Parameter(
+     *     name="RequestSearch[user_id]",
+     *     in="query",
+     *     description="Поиск по user_id",
+     *     allowEmptyValue=true,
+     *     @OA\Schema(
+     *       type="integer",
+     *     ),
+     *   ),
      *   @OA\Response(
      *     response=200,
      *     description=""
