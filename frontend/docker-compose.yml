@@ -5,7 +5,7 @@ services:
     working_dir: /app
     volumes:
       - ./:/app:delegated
-    command: yarn serve
+    command: yarn serve -l 5000 -s build
     restart: always
     ports:
       - '8001:5000'
