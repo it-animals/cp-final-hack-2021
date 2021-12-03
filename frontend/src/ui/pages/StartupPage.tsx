@@ -29,7 +29,7 @@ import {
 import styled from "styled-components";
 import { useAppSelector } from "../../service/store/store";
 import { selectUserData } from "../../service/store/userSlice";
-import { userIsModerator } from "../../domain/user";
+import { userIsAdmin, userIsModerator } from "../../domain/user";
 
 const Doc = styled(Paper)`
   padding: 40px;
@@ -64,6 +64,7 @@ export const StartupPage: CT<unknown> = () => {
   const snackbar = useSnackbar();
   const [data, setData] = useState<ProjectType | null>(null);
   const userData = useAppSelector(selectUserData);
+
   const load = async () => {
     try {
       const data = await projectService.getById(Number(id));
@@ -81,7 +82,7 @@ export const StartupPage: CT<unknown> = () => {
     if (!Number(id)) history.push("/");
     load();
   }, []);
-  console.log(userData.user);
+
   return (
     <PageTemplate>
       <Grid container>
@@ -98,6 +99,18 @@ export const StartupPage: CT<unknown> = () => {
           <div>
             <Button variant={"contained"}>Управление проектом</Button>
           </div>
+          {/*{userData?.user &&*/}
+          {/*  (userIsModerator(userData?.user) ||*/}
+          {/*    userIsAdmin(userData?.user)) && (*/}
+          {/*    <Button*/}
+          {/*      style={{ width: 200 }}*/}
+          {/*      size={"large"}*/}
+          {/*      variant={"contained"}*/}
+          {/*      fullWidth={false}*/}
+          {/*    >*/}
+          {/*      Связаться*/}
+          {/*    </Button>*/}
+          {/*  )}*/}
         </Grid>
         <Grid container spacing={1} xs={12} mt={3}>
           <Grid item xs={4}>
@@ -107,21 +120,32 @@ export const StartupPage: CT<unknown> = () => {
               justifyContent={"space-between"}
               height={"100%"}
             >
-              {userData && userIsModerator(userData!.user!) && (
-                <Button
-                  style={{ width: 200 }}
-                  size={"large"}
-                  variant={"contained"}
-                  fullWidth={false}
+              <div>
+                <Grid
+                  container
+                  xs={12}
+                  mt={1}
+                  rowGap={"10px"}
+                  columnGap={"10px"}
                 >
-                  Связаться
-                </Button>
-              )}
-              <Grid container xs={12} mt={1} columnGap={"10px"}>
-                {(data?.tags ?? []).map((item) => (
-                  <Chip label={item.name} />
-                ))}
-              </Grid>
+                  {(data?.tags ?? []).map((item) => (
+                    <Chip label={item.name} />
+                  ))}
+                </Grid>
+              </div>
+
+              {/*{userData?.user &&*/}
+              {/*  (userIsModerator(userData?.user) ||*/}
+              {/*    userIsAdmin(userData?.user)) && (*/}
+              {/*    <Button*/}
+              {/*      style={{ width: 200 }}*/}
+              {/*      size={"large"}*/}
+              {/*      variant={"contained"}*/}
+              {/*      fullWidth={false}*/}
+              {/*    >*/}
+              {/*      Связаться*/}
+              {/*    </Button>*/}
+              {/*  )}*/}
             </Box>
           </Grid>
           <Grid item xs={4}>
@@ -307,8 +331,22 @@ export const StartupPage: CT<unknown> = () => {
                         xs={12}
                         mt={1}
                         display={"flex"}
-                        justifyContent={"flex-end"}
+                        alignItems={"center"}
+                        justifyContent={"space-between"}
                       >
+                        {userData?.user &&
+                          (userIsModerator(userData?.user) ||
+                            userIsAdmin(userData?.user)) && (
+                            <a target={"_blank"} href={`mailto:${item.email}`}>
+                              <Button
+                                style={{ width: 200 }}
+                                variant={"contained"}
+                                fullWidth={false}
+                              >
+                                Связаться
+                              </Button>
+                            </a>
+                          )}
                         <Chip label={item.is_owner ? "Владелец" : "Участник"} />
                       </Grid>
                     </Grid>

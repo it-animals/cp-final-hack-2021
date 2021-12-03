@@ -46,7 +46,7 @@ export type ProjectType = {
   tags: { id: string; name: string }[];
   for_transport: ProjectForTransportType;
   certification: ProjectCertificationType;
-  teams: { fio: string; is_owner: boolean }[];
+  teams: { fio: string; is_owner: boolean; email: string }[];
   projectFiles: {
     id: number;
     project_id: number;
