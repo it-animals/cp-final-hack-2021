@@ -75,7 +75,7 @@ class ProjectSearch extends Project
             if($tags) {
                 $ids = array_map(function(Tag $tag) {return $tag->id;}, $tags);
                 $tagQuery = ProjectTag::find()->select('project_id')->andWhere(['in', 'tag_id', $ids]);
-                $query->andWhere(['in', 'id', $tagQuery]);
+                $query->orWhere(['in', 'id', $tagQuery]);
             }
             
             $query->orderBy("ts_rank(to_tsvector(name || ' ' ||descr || ' ' || cases || ' ' || profit), plainto_tsquery(:search)) DESC");
