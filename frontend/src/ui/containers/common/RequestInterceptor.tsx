@@ -21,9 +21,9 @@ export const RequestInterceptor: React.FC<unknown> = ({ children }) => {
         console.log(err);
         if (err.response) {
           if (
-            err?.response?.status === 500 ||
+            err?.response?.status === 500
             // err?.response?.status === 403 ||
-            err?.response?.status === 401
+            // err?.response?.status === 401
           ) {
             const { message } = err.response.data;
             dispatch(setAppError({ status: err.response.status, message }));

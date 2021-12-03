@@ -22,10 +22,18 @@ import { _variables } from "../styles/_variables";
 import { hexToRgba } from "../styles/_mixin";
 import { FilterBox } from "../components/FilterBox";
 import SearchIcon from "@mui/icons-material/Search";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Loader } from "../components/Loader";
+import { ProjectStatus, ProjectType } from "../../domain/project";
+import { NotFound } from "../components/NotFound";
+import { projectService } from "../../service/project/project";
+import { useSnackbar } from "notistack";
+import useUrlState from "@ahooksjs/use-url-state";
+import { motion } from "framer-motion";
+import { rightToLeftAnimation } from "../lib/animations/rightToLeftAnimation";
+import { upToDownFn } from "../lib/animations/upToDownAnimate";
 
-const List = styled.div`
+const List = styled(motion.div)`
   display: flex;
   flex-direction: column;
   row-gap: 10px;
@@ -59,9 +67,40 @@ const TabCustom = styled(Tab)`
   }
 `;
 
+const StartupElem = motion(Startup);
+
 export const StartupsPage = () => {
   const [inputSearch, setInputSearch] = useState("");
   const [existSearch, setExitSearch] = useState(false);
+  const [isLoad, setLoad] = useState(false);
+  const [data, setData] = useState<ProjectType[]>([]);
+  const snackbar = useSnackbar();
+
+  const [filterState, setFilterState] = useUrlState({
+    status: "0",
+    type: "1",
+  });
+
+  const load = async () => {
+    setLoad(true);
+    setData([]);
+    try {
+      const data = await projectService.list({
+        status: Number(filterState.status!)! as ProjectStatus | 0,
+        type: Number(filterState.type) as ProjectType["type"],
+      });
+      setData(data.data.projects);
+    } catch (e) {
+      snackbar.enqueueSnackbar("Ой, произошла ошибка. Попробуйте еще раз", {
+        variant: "warning",
+      });
+    }
+    setLoad(false);
+  };
+
+  useEffect(() => {
+    load();
+  }, [filterState]);
 
   const changeSearchHandler = (
     e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>
@@ -125,8 +164,10 @@ export const StartupsPage = () => {
         <Grid container spacing={2}>
           <Grid item xs={8}>
             <TabList
-              value={0}
-              onChange={() => {}}
+              value={Number(filterState.status)}
+              onChange={(event, value) => {
+                setFilterState({ ...filterState, status: String(value) });
+              }}
               variant="scrollable"
               scrollButtons={"auto"}
               aria-label="scrollable auto tabs example"
@@ -139,18 +180,11 @@ export const StartupsPage = () => {
               <TabCustom label="Внедрение" />
             </TabList>
             <List id={"list"}>
-              <Startup />
-              <Startup />
-              <Startup />
-              <Startup />
-              <Startup />
-              <Startup />
-              <Startup />
-              <Startup />
-              <Startup />
-              <Startup />
-              <Startup />
-              <Startup />
+              {isLoad && <Loader height={260} />}
+              {!data.length && !isLoad && <NotFound />}
+              {data &&
+                !!data.length &&
+                data.map((item) => <StartupElem key={item.id} {...item} />)}
             </List>
           </Grid>
           <Grid item xs={4} mt={4}>
@@ -170,7 +204,7 @@ export const StartupsPage = () => {
                     <FormControlLabel
                       value="male"
                       control={<Radio />}
-                      label="Навазнию"
+                      label="Названию"
                     />
                   </RadioGroup>
                 </FormControl>
@@ -178,28 +212,40 @@ export const StartupsPage = () => {
             </Grid>
             <Grid item xs={12} mt={1}>
               <FilterBox title={"Направление"}>
-                <FormGroup>
+                <RadioGroup
+                  aria-label="gender"
+                  defaultValue={filterState.type}
+                  name="radio-buttons-group"
+                  onChange={(event, value) => {
+                    setFilterState({ ...filterState, type: String(value) });
+                  }}
+                >
                   <FormControlLabel
-                    control={<Checkbox defaultChecked />}
+                    value="1"
+                    control={<Radio />}
                     label="Доступный и комфортный городской транспорт"
                   />
                   <FormControlLabel
-                    control={<Checkbox defaultChecked />}
+                    value="2"
+                    control={<Radio />}
                     label="Новые виды мобильности"
                   />
                   <FormControlLabel
-                    control={<Checkbox defaultChecked />}
+                    value="3"
+                    control={<Radio />}
                     label="Безопасность дорожного движения"
                   />
                   <FormControlLabel
-                    control={<Checkbox defaultChecked />}
+                    value="4"
+                    control={<Radio />}
                     label="Здоровые улицы и экология"
                   />
                   <FormControlLabel
-                    control={<Checkbox defaultChecked />}
+                    value="5"
+                    control={<Radio />}
                     label="Цифровые технологии в транспорте"
                   />
-                </FormGroup>
+                </RadioGroup>
               </FilterBox>
             </Grid>
           </Grid>

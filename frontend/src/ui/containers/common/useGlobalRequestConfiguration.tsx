@@ -6,5 +6,6 @@ export const useGlobalRequestConfiguration = () => {
   useEffect(() => {
     axios.defaults.baseURL = appConfig.apiUrl;
     //eslint-disable-next-line
-  }, []);
+    console.log("1231231231");
+  });
 };

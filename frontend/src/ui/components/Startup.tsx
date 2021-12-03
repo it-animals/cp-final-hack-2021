@@ -14,6 +14,13 @@ import { Link as LinkSPA } from "react-router-dom";
 import { Link } from "@mui/material";
 import { _variables } from "../styles/_variables";
 import { GorSeparator } from "./GorSeparator";
+import {
+  getCertProjectById,
+  getForProjectById,
+  getStatusProjectById,
+  getTypeProjectById,
+  ProjectType,
+} from "../../domain/project";
 
 const Element = styled(Paper)`
   min-height: 80px;
@@ -74,7 +81,18 @@ const PopoverDescription = styled(Typography)`
   -webkit-box-orient: vertical;
 `;
 
-export const Startup: CT<unknown> = ({ className, children }) => {
+export const Startup: CT<ProjectType> = ({
+  name,
+
+  tags,
+  className,
+  children,
+  descr,
+  type,
+  status,
+  certification,
+  for_transropt,
+}) => {
   const [anchorEl, setAnchorEl] = React.useState(null);
 
   const handlePopoverOpen = (event: any) => {
@@ -90,19 +108,18 @@ export const Startup: CT<unknown> = ({ className, children }) => {
   const theme = useTheme();
   return (
     <Element
+      className={className}
       onMouseEnter={handlePopoverOpen}
       onMouseLeave={handlePopoverClose}
       elevation={2}
     >
       {/*<LinkSPA to={"/startaps/123"}>*/}
       {/*<Link>*/}
-      <Typography variant={"h6"}>Название проекта</Typography>
+      <Typography variant={"h6"}>{name}</Typography>
       <ChipContainer>
-        <Chip label="Хомяки" size="small" defaultValue={"тег1"} />
-        <Chip label="Вагоны" size="small" defaultValue={"тег1"} />
-        <Chip label="Рельсы" size="small" defaultValue={"тег1"} />
-        <Chip label="Поезда" size="small" defaultValue={"тег1"} />
-        <Chip label="Стартап" size="small" defaultValue={"тег1"} />
+        {tags.map((item) => (
+          <Chip label={item.name} size="small" defaultValue={item.name} />
+        ))}
       </ChipContainer>
       {/*</Link>*/}
       {/*</LinkSPA>*/}
@@ -125,20 +142,13 @@ export const Startup: CT<unknown> = ({ className, children }) => {
         <PopoverWrapper>
           <PopoverElement elevation={3}>
             <PopoverHeading fontSize={16} fontWeight={"bold"} marginBottom={2}>
-              Большой проект
+              {name}
             </PopoverHeading>
-            <PopoverDescription fontSize={14} color={_variables.textSecond}>
-              Это очень большой проект посвященный бла бла бла бла Это очень
-              большой проект посвященный бла бла бла бла Это очень большой
-              проект посвященный бла бла бла бла Это очень большой проект
-              посвященный бла бла бла бла Это очень большой проект посвященный
-              бла бла бла бла Это очень большой проект посвященный бла бла бла
-              бла Это очень большой проект посвященный бла бла бла бла Это очень
-              большой проект посвященный бла бла бла блаЭто очень большой проект
-              посвященный бла бла бла бла Это очень большой проект посвященный
-              бла бла бла бла Это очень большой проект посвященный бла бла бла
-              бла Это очень большой проект посвященный бла бла бла бла
-            </PopoverDescription>
+            <PopoverDescription
+              fontSize={14}
+              color={_variables.textSecond}
+              dangerouslySetInnerHTML={{ __html: descr }}
+            />
             <GorSeparator width={30} mrn={11} />
             <Grid container>
               <Grid item xs={12}>
@@ -154,7 +164,7 @@ export const Startup: CT<unknown> = ({ className, children }) => {
                       color: _variables.textColor,
                     }}
                   >
-                    Прототип
+                    {getStatusProjectById(status)}
                   </span>
                 </Typography>
                 <Typography
@@ -170,7 +180,7 @@ export const Startup: CT<unknown> = ({ className, children }) => {
                       color: _variables.textColor,
                     }}
                   >
-                    Доступный и комфортный городской транспорт
+                    {getTypeProjectById(type)}
                   </span>
                 </Typography>
                 <Typography
@@ -186,7 +196,7 @@ export const Startup: CT<unknown> = ({ className, children }) => {
                       color: _variables.textColor,
                     }}
                   >
-                    Нужна
+                    {getCertProjectById(certification)}
                   </span>
                 </Typography>
                 <Typography
@@ -202,7 +212,7 @@ export const Startup: CT<unknown> = ({ className, children }) => {
                       color: _variables.textColor,
                     }}
                   >
-                    Московского метрополитена
+                    {getForProjectById(for_transropt)}
                   </span>
                 </Typography>
                 <Typography
@@ -239,16 +249,13 @@ export const Startup: CT<unknown> = ({ className, children }) => {
                   columnGap={"5px"}
                   rowGap={"5px"}
                 >
-                  <Chip label="Хомяки" size="small" defaultValue={"тег1"} />
-                  <Chip label="Вагоны" size="small" defaultValue={"тег1"} />
-                  <Chip label="Рельсы" size="small" defaultValue={"тег1"} />
-                  <Chip label="Поезда" size="small" defaultValue={"тег1"} />
-                  <Chip label="Стартап" size="small" defaultValue={"тег1"} />
-                  <Chip label="ASd d" size="small" defaultValue={"тег1"} />
-                  <Chip label="Бублики" size="small" defaultValue={"тег1"} />
-                  <Chip label="Уши" size="small" defaultValue={"тег1"} />
-                  <Chip label="Ноги" size="small" defaultValue={"тег1"} />
-                  <Chip label="Клавиши" size="small" defaultValue={"тег1"} />
+                  {tags.map((item) => (
+                    <Chip
+                      label={item.name}
+                      size="small"
+                      defaultValue={item.name}
+                    />
+                  ))}
                 </Box>
               </Grid>
             </Grid>

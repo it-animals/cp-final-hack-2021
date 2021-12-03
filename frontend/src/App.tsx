@@ -15,10 +15,11 @@ import { useGlobalRequestConfiguration } from "./ui/containers/common/useGlobalR
 import { useAppSelector } from "./service/store/store";
 import { selectUserData } from "./service/store/userSlice";
 import { userService } from "./service/user/user";
+import { LogoutPage } from "./ui/pages/LogoutPage";
 
 function App() {
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
-  useGlobalRequestConfiguration();
+
   const userData = useAppSelector(selectUserData);
 
   const protectedRoute =
@@ -38,6 +39,7 @@ function App() {
         />
         <Route path={"/registration"} exact component={RegisterPage} />
         <Route path={"/login"} exact component={LoginPage} />
+        <Route path={"/logout"} exact component={LogoutPage} />
         <Route path={"/error"} component={ErrorPage} />
         <Route path={"/404"} component={NotFoundPage} />
         <Route path={"/403"} component={ForbiddenPage} />

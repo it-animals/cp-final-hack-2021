@@ -14,7 +14,7 @@ export const userSlice = createSlice({
   name: "app",
   initialState,
   reducers: {
-    setUserData(state, action: PayloadAction<UserDomainType>) {
+    setUserData(state, action: PayloadAction<UserDomainType | null>) {
       state.user = action.payload;
     },
   },
