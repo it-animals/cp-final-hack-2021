@@ -2,12 +2,6 @@ import styled from "styled-components";
 import noAvatar from "../assets/images/no_avatar.jpg";
 import { Typography } from "@mui/material";
 
-const Container = styled.div`
-  display: flex;
-  align-items: center;
-  height: 100%;
-  column-gap: 15px;
-`;
 const Figure = styled.figure<{ variant: "big" | "normal" }>`
   display: flex;
   align-items: center;
@@ -41,12 +35,19 @@ export const Avatar: CT<{
 }> = ({
   name = "",
   className,
-  isShowName = true,
+  isShowName = false,
   variant = "normal",
   children,
   src = noAvatar,
   onClick = () => {},
 }) => {
+  const Container = styled.div`
+    display: flex;
+    align-items: center;
+    height: 100%;
+    column-gap: ${isShowName ? "15px" : 0};
+  `;
+
   const srcAvatar = src === "" || !src ? noAvatar : src;
   return (
     <Container className={className}>

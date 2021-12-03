@@ -1,6 +1,11 @@
-export const upToDownFn = (duration: number, delay: number) => ({
-  initial: { opacity: 0, y: -50 },
-  animate: { opacity: 1, y: 0 },
+export const upToDownFn = (
+  duration: number = 0.4,
+  delay: number = 0.2,
+  by: number = -50,
+  to: number = 0
+) => ({
+  initial: { opacity: 0, y: by },
+  animate: { opacity: 1, y: to },
   transition: {
     ease: ["linear"],
     duration,

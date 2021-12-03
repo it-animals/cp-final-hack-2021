@@ -3,14 +3,17 @@ import { _variables } from "./_variables";
 
 export const MUITheme = createTheme({
   palette: {
-    background: {
-      default: _variables.primaryColor,
-    },
     primary: {
-      main: _variables.secondColor,
+      main: _variables.primaryColor,
+    },
+    background: {
+      default: _variables.backgroundColor,
     },
     secondary: {
-      main: _variables.accentColor,
+      main: _variables.secondColor,
     },
+    text:{
+      primary:_variables.textColor
+    }
   },
 });
