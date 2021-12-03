@@ -4,7 +4,7 @@ import { Grid } from "@mui/material";
 import styled from "styled-components";
 
 const BoxContent = styled(Box)`
-  padding: 60px 0;
+  padding: 40px 0;
 `;
 
 export const PageTemplate: CT<unknown> = ({ children }) => {

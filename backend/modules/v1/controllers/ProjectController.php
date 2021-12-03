@@ -9,7 +9,6 @@ use app\modules\v1\traits\GetUserTrait;
 use app\modules\v1\traits\OptionsActionTrait;
 use yii\rest\Controller;
 use yii\web\BadRequestHttpException;
-use function var_dump;
 
 /**
  * @OA\Tag(
@@ -59,6 +58,16 @@ class ProjectController extends Controller
      *       example="projectFiles",
      *       value="projectFiles",
      *       summary="projectFiles",
+     *     ),
+     *     @OA\Examples(
+     *       example="teams",
+     *       value="teams",
+     *       summary="teams",
+     *     ),
+     *     @OA\Examples(
+     *       example="projectRequests",
+     *       value="projectRequests",
+     *       summary="projectRequests",
      *     ),
      *   ),
      *   @OA\Parameter(

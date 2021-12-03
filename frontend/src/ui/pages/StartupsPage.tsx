@@ -16,6 +16,7 @@ import {
   Tabs,
   TextField,
   Typography,
+  useTheme,
 } from "@mui/material";
 import { Startup } from "../components/Startup";
 import styled from "styled-components";
@@ -34,6 +35,12 @@ import { motion } from "framer-motion";
 import { rightToLeftAnimation } from "../lib/animations/rightToLeftAnimation";
 import { upToDownFn } from "../lib/animations/upToDownAnimate";
 import { tagsService } from "../../service/tag/tags";
+import { TopLine } from "../components/TopLine";
+import { useAppSelector } from "../../service/store/store";
+import { selectUserData } from "../../service/store/userSlice";
+import { userIsAdmin } from "../../domain/user";
+import { appConfig } from "../../config";
+import { Link } from "react-router-dom";
 
 const List = styled(motion.div)`
   display: flex;
@@ -69,6 +76,12 @@ const TabCustom = styled(Tab)`
   }
 `;
 
+const RequestButtonWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 40px;
+`;
 const StartupElem = motion(Startup);
 
 export const StartupsPage = () => {
@@ -78,7 +91,7 @@ export const StartupsPage = () => {
   const [data, setData] = useState<ProjectType[]>([]);
   const [tagData, setTagData] = useState<ProjectType["tags"]>([]);
   const snackbar = useSnackbar();
-
+  const userData = useAppSelector(selectUserData);
   const [filterState, setFilterState] = useUrlState({
     status: "0",
     search: "",
@@ -165,6 +178,14 @@ export const StartupsPage = () => {
   return (
     <>
       <PageTemplate>
+        <TopLine>
+          {userData?.user && userIsAdmin(userData.user) && (
+            <a href={appConfig.adminPanelUrl}>
+              <Button variant={"outlined"}>Панель администратора</Button>
+            </a>
+          )}
+        </TopLine>
+
         <Grid container xs={12}>
           <SearchLine>
             <Box sx={{ width: "70%", display: "flex", alignItems: "flex-end" }}>
@@ -216,7 +237,16 @@ export const StartupsPage = () => {
             </TabList>
             <List id={"list"}>
               {isLoad && <Loader height={260} />}
-              {!data.length && !isLoad && <NotFound />}
+              {!data.length && !isLoad && (
+                <>
+                  <NotFound />
+                  <RequestButtonWrapper>
+                    <Link to={"/request"}>
+                      <Button variant={"contained"}>Отправить запрос</Button>
+                    </Link>
+                  </RequestButtonWrapper>
+                </>
+              )}
               {data &&
                 !!data.length &&
                 data.map((item) => <StartupElem key={item.id} {...item} />)}
