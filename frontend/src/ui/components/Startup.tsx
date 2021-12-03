@@ -74,7 +74,7 @@ const PopoverDescription = styled(Typography)`
   -webkit-box-orient: vertical;
 `;
 
-export const Startap: CT<unknown> = ({ className, children }) => {
+export const Startup: CT<unknown> = ({ className, children }) => {
   const [anchorEl, setAnchorEl] = React.useState(null);
 
   const handlePopoverOpen = (event: any) => {
@@ -96,9 +96,7 @@ export const Startap: CT<unknown> = ({ className, children }) => {
     >
       {/*<LinkSPA to={"/startaps/123"}>*/}
       {/*<Link>*/}
-      <Typography variant={"h6"}>
-        Загрузочные вагоны для безопасности хомяков
-      </Typography>
+      <Typography variant={"h6"}>Название проекта</Typography>
       <ChipContainer>
         <Chip label="Хомяки" size="small" defaultValue={"тег1"} />
         <Chip label="Вагоны" size="small" defaultValue={"тег1"} />
@@ -127,9 +125,7 @@ export const Startap: CT<unknown> = ({ className, children }) => {
         <PopoverWrapper>
           <PopoverElement elevation={3}>
             <PopoverHeading fontSize={16} fontWeight={"bold"} marginBottom={2}>
-              Загрузочные вагоны для безопасности хомяков и котов и улиток и бла
-              бла бла бла Загрузочные вагоны для безопасности хомяков и котов и
-              улиток и бла бла бла бла
+              Большой проект
             </PopoverHeading>
             <PopoverDescription fontSize={14} color={_variables.textSecond}>
               Это очень большой проект посвященный бла бла бла бла Это очень

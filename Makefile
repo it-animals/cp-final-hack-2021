@@ -21,6 +21,6 @@ update-dependencies:
 migrate:
 	cd backend && docker-compose exec php php yii migrate --interactive=0
 create-admin:
-	cd backend && docker-compose exec php php yii tool/create-admin test@test.org test123
+	cd backend && docker-compose exec php php yii tool/create-admin hidashko@yandex.ru 123123
 set-permissions:
 	cd backend && chmod 0775 files && chown $(USER):www-data files
