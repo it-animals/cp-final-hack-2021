@@ -3,7 +3,6 @@
  * 2.    да, требуется сертификация, но у нас ее нет;
  * 3.    нет, не требуется;
  */
-import { ProjectTagType } from "./projectTag";
 
 export type ProjectCertificationType = 1 | 2 | 3;
 

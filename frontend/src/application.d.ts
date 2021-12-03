@@ -1,1 +1,1 @@
-type CT<T> = React.FC<{className?:string} & T>
+type CT<T> = React.FC<{ className?: string } & T>;

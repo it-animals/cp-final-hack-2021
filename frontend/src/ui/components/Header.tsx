@@ -1,19 +1,10 @@
-import {
-  AppBar,
-  Badge,
-  Box,
-  IconButton,
-  Popover,
-  Toolbar,
-  Typography,
-} from "@mui/material";
+import { AppBar, Box, Popover, Toolbar, Typography } from "@mui/material";
 import { Avatar } from "./Avatar";
 import styled from "styled-components";
 import { Logo } from "./Logo";
 import { useAppSelector } from "../../service/store/store";
 import { selectUserData } from "../../service/store/userSlice";
-import React, { useEffect, useRef, useState } from "react";
-import { NavLink } from "react-router-dom";
+import React, { useRef, useState } from "react";
 
 const AppBarElement = styled(AppBar)``;
 

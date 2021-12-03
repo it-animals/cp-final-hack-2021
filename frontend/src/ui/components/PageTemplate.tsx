@@ -1,6 +1,5 @@
-import { Box, Container, Menu, MenuItem } from "@mui/material";
+import { Box, Container } from "@mui/material";
 import { Header } from "./Header";
-import { Grid } from "@mui/material";
 import styled from "styled-components";
 
 const BoxContent = styled(Box)`

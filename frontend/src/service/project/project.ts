@@ -1,7 +1,5 @@
 import axios from "axios";
-import { UserDomainType } from "../../domain/user";
 import {
-  ProjectForTransportType,
   ProjectStatus,
   ProjectType,
   ProjectTypesType,

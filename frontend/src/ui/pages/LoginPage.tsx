@@ -1,12 +1,19 @@
 import styled from "styled-components";
 import { _variables } from "../styles/_variables";
 import { hexToRgba } from "../styles/_mixin";
-import { Box, Button, Grid, Paper, TextField, Typography } from "@mui/material";
+import {
+  Box,
+  Button,
+  Grid,
+  Link,
+  Paper,
+  TextField,
+  Typography,
+} from "@mui/material";
 import { ContentWrapper } from "../components/ContentWrapper";
 import { Logo } from "../components/Logo";
 import { useFormik } from "formik";
 import { Link as LinkSPA, useHistory } from "react-router-dom";
-import { Link } from "@mui/material";
 import * as yup from "yup";
 import { motion } from "framer-motion";
 import { upToDownFn } from "../lib/animations/upToDownAnimate";

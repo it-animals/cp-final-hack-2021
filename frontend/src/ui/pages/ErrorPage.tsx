@@ -1,6 +1,5 @@
 import { Button, Grid, Typography } from "@mui/material";
 import { PageTemplate } from "../components/PageTemplate";
-import { Link } from "react-router-dom";
 
 export const ErrorPage: CT<unknown> = () => {
   return (

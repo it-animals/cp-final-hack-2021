@@ -12,8 +12,8 @@ export const MUITheme = createTheme({
     secondary: {
       main: _variables.secondColor,
     },
-    text:{
-      primary:_variables.textColor
-    }
+    text: {
+      primary: _variables.textColor,
+    },
   },
 });

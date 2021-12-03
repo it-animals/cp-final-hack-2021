@@ -23,7 +23,7 @@ import { useAppDispatch, useAppSelector } from "../../service/store/store";
 import { useEffect, useState } from "react";
 import { useSnackbar } from "notistack";
 import { userService } from "../../service/user/user";
-import { selectUserData, setUserData } from "../../service/store/userSlice";
+import { selectUserData } from "../../service/store/userSlice";
 
 const Main = styled.main`
   width: 100%;

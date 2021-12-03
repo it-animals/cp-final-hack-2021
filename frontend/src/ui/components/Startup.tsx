@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React from "react";
 import styled from "styled-components";
 import {
   Box,
@@ -9,8 +9,7 @@ import {
   Typography,
   useTheme,
 } from "@mui/material";
-import { ContentWrapper } from "./ContentWrapper";
-import { Link as LinkSPA, useParams } from "react-router-dom";
+import { Link as LinkSPA } from "react-router-dom";
 
 import { _variables } from "../styles/_variables";
 import { GorSeparator } from "./GorSeparator";

@@ -5,17 +5,14 @@ import { Box, Button, Grid, Paper, TextField, Typography } from "@mui/material";
 import { ContentWrapper } from "../components/ContentWrapper";
 import { Logo } from "../components/Logo";
 import { useFormik } from "formik";
-import { Link as LinkSPA, useHistory } from "react-router-dom";
-import { Link } from "@mui/material";
+import { useHistory } from "react-router-dom";
 import * as yup from "yup";
 import { motion } from "framer-motion";
 import { upToDownFn } from "../lib/animations/upToDownAnimate";
-import { userService } from "../../service/user/user";
 import { useAppDispatch, useAppSelector } from "../../service/store/store";
-import { selectUserData, setUserData } from "../../service/store/userSlice";
-import { useEffect, useState } from "react";
+import { selectUserData } from "../../service/store/userSlice";
+import { useState } from "react";
 import { useSnackbar } from "notistack";
-import { TextareaAutosize } from "@mui/material";
 import { requestService } from "../../service/request/request";
 
 const Main = styled.main`
@@ -82,7 +79,9 @@ export const RequestPage: CT<unknown> = () => {
         history.push("/");
       }, 700);
     } catch (e) {
-      snackbar.enqueueSnackbar("Ошибка отправки запроса", { variant: "warning" });
+      snackbar.enqueueSnackbar("Ошибка отправки запроса", {
+        variant: "warning",
+      });
       setTimeout(() => {
         history.push("/");
       }, 700);

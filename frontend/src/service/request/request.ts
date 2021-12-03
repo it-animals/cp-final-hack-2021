@@ -1,5 +1,4 @@
 import axios from "axios";
-import { ProjectType } from "../../domain/project";
 import { RequestType } from "../../domain/request";
 
 export const requestService = {

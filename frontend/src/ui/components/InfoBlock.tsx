@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import { _variables } from "../styles/_variables";
 import { Paper } from "@mui/material";
 
 const Wrapper = styled(Paper)`

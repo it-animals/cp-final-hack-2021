@@ -4,7 +4,6 @@ import {
   Button,
   Chip,
   Grid,
-  Icon,
   Paper,
   Skeleton,
   Typography,
@@ -15,7 +14,7 @@ import { _variables } from "../styles/_variables";
 import React, { useEffect, useState } from "react";
 import { HeadingSection } from "../components/HeadingSection";
 import { Avatar } from "../components/Avatar";
-import { useHistory, useParams } from "react-router-dom";
+import { Link, useHistory, useParams } from "react-router-dom";
 import { projectService } from "../../service/project/project";
 import { useSnackbar } from "notistack";
 import DescriptionRoundedIcon from "@mui/icons-material/DescriptionRounded";
@@ -32,7 +31,6 @@ import { selectUserData } from "../../service/store/userSlice";
 import { userIsAdmin, userIsModerator } from "../../domain/user";
 import { TopLine } from "../components/TopLine";
 import { appConfig } from "../../config";
-import { Link } from "react-router-dom";
 
 const Doc = styled(Paper)`
   padding: 40px;

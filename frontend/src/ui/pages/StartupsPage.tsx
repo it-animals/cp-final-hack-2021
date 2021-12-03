@@ -1,4 +1,3 @@
-import { Header } from "../components/Header";
 import { PageTemplate } from "../components/PageTemplate";
 import {
   Box,
@@ -8,15 +7,12 @@ import {
   FormControlLabel,
   FormGroup,
   Grid,
-  Paper,
   Radio,
   RadioGroup,
   Skeleton,
   Tab,
   Tabs,
   TextField,
-  Typography,
-  useTheme,
 } from "@mui/material";
 import { Startup } from "../components/Startup";
 import styled from "styled-components";
@@ -32,8 +28,6 @@ import { projectService } from "../../service/project/project";
 import { useSnackbar } from "notistack";
 import useUrlState from "@ahooksjs/use-url-state";
 import { motion } from "framer-motion";
-import { rightToLeftAnimation } from "../lib/animations/rightToLeftAnimation";
-import { upToDownFn } from "../lib/animations/upToDownAnimate";
 import { tagsService } from "../../service/tag/tags";
 import { TopLine } from "../components/TopLine";
 import { useAppSelector } from "../../service/store/store";

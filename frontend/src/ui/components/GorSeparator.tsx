@@ -1,6 +1,5 @@
 import styled from "styled-components";
 import { hexToRgba } from "../styles/_mixin";
-import { _variables } from "../styles/_variables";
 
 const Element = styled.div`
   width: 20px;

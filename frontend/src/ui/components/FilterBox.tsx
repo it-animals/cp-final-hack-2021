@@ -1,6 +1,5 @@
 import styled from "styled-components";
-import { _variables } from "../styles/_variables";
-import { Box, Paper, Typography, useTheme } from "@mui/material";
+import { Paper, Typography, useTheme } from "@mui/material";
 
 const BoxElem = styled(Paper)`
   border-radius: 5px;
