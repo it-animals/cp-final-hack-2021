@@ -9,6 +9,7 @@ use app\modules\v1\traits\GetUserTrait;
 use app\modules\v1\traits\OptionsActionTrait;
 use yii\rest\Controller;
 use yii\web\BadRequestHttpException;
+use function var_dump;
 
 /**
  * @OA\Tag(
@@ -246,9 +247,9 @@ class ProjectController extends Controller
         $model = new Project();
         if ($model->load($this->request->post()) && $model->save()) {
             return [
-                'project' => $model->toArray(),
+                'project' => $model,
             ];
         }
-        throw new BadRequestHttpException('Не удалось создать проект');
+        throw new BadRequestHttpException($model->errors ? $model->getErrorSummary(false)[0] : 'Ошибка загрузки формы');
     }
 }
