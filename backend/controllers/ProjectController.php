@@ -10,6 +10,7 @@ use app\models\User;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use app\models\ProjectTag;
 
 /**
  * ProjectController implements the CRUD actions for Project model.
@@ -150,6 +151,27 @@ class ProjectController extends Controller
             'transports' => Project::getTransportList(),
             'certifications' => Project::getCertificationList(),
         ]);
+    }
+    
+    public function actionGenerate($id) {
+        $model = $this->findModel($id);
+        $content = $model->profit;
+        $text = preg_replace('/\<.+?\>/ui', '', $content);
+        $generator = new \app\generators\TagGenerator($text);
+        $tags1 = $generator->generate();
+        
+        $content = $model->cases;
+        $text = preg_replace('/\<.+?\>/ui', '', $content);
+        $generator = new \app\generators\TagGenerator($text);
+        $tags2 = $generator->generate();
+        $tags = array_merge($tags1, $tags2);
+        if($tags) {
+            ProjectTag::deleteAllByProject($model);
+            foreach($tags as $tag) {
+                $ptag = ProjectTag::addToProject($model, $tag);
+            }
+        }        
+        return $this->redirect(['view', 'id' => $model->id]);
     }
 
     /**
