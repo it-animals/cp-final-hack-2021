@@ -61,11 +61,6 @@ class UserIdentity implements IdentityInterface
      */
     public static function findIdentityByAccessToken($token, $type = null): ?UserIdentity
     {
-        /*$user = User::findOne(['access_token' => $token]);
-        if ($user && $user->access_token_unixtime > time() + Yii::$app->params['tokenLive']) {
-            $user = null;
-        }
-        return $user ? new self($user) : null;*/
         $jwt = Yii::$container->get(JwtService::class);
         return $jwt->identityByJwtToken($token);
     }

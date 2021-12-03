@@ -14,6 +14,11 @@ use yii\web\ForbiddenHttpException;
 use function mb_strtolower;
 use function trim;
 
+/**
+ * @OA\Tag(
+ *   name="User"
+ * )
+ */
 class UserController extends Controller
 {
     use OptionsActionTrait, GetUserTrait;
@@ -30,6 +35,45 @@ class UserController extends Controller
         ]);
     }
 
+    /**
+     * @OA\Post(
+     *   tags={"User"},
+     *   path="/v1/user/register",
+     *   summary="",
+     *   @OA\RequestBody(
+     *     @OA\MediaType(
+     *       mediaType="multipart/form-data",
+     *       @OA\Schema(
+     *         required={"fio", "password", "email", "role"},
+     *         @OA\Property(
+     *           property="fio",
+     *           type="string",
+     *           description="",
+     *         ),
+     *         @OA\Property(
+     *           property="email",
+     *           type="string",
+     *           description="",
+     *         ),
+     *         @OA\Property(
+     *           property="password",
+     *           type="string",
+     *           description="",
+     *         ),
+     *         @OA\Property(
+     *           property="role",
+     *           type="integer",
+     *           description="",
+     *         ),
+     *       ),
+     *     ),
+     *   ),
+     *   @OA\Response(
+     *     response=200,
+     *     description=""
+     *   )
+     * )
+     */
     public function actionRegister()
     {
         $request = Yii::$app->request;
@@ -50,6 +94,35 @@ class UserController extends Controller
         ];
     }
 
+    /**
+     * @OA\Post(
+     *   tags={"User"},
+     *   path="/v1/user/login",
+     *   summary="",
+     *   @OA\RequestBody(
+     *     @OA\MediaType(
+     *       mediaType="multipart/form-data",
+     *       @OA\Schema(
+     *         required={"email", "password"},
+     *         @OA\Property(
+     *           property="email",
+     *           type="string",
+     *           description="",
+     *         ),
+     *         @OA\Property(
+     *           property="password",
+     *           type="string",
+     *           description="",
+     *         ),
+     *       ),
+     *     ),
+     *   ),
+     *   @OA\Response(
+     *     response=200,
+     *     description=""
+     *   ),
+     * ),
+     */
     public function actionLogin()
     {
         $request = Yii::$app->request;
@@ -66,6 +139,18 @@ class UserController extends Controller
         ];
     }
 
+    /**
+     * @OA\Get(
+     *   tags={"User"},
+     *   path="/v1/user/info",
+     *   security={{"bearerAuth"={}}},
+     *   summary="",
+     *   @OA\Response(
+     *     response=200,
+     *     description=""
+     *   )
+     * )
+     */
     public function actionInfo()
     {
         $user = $this->getUser();

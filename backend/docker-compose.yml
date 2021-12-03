@@ -22,7 +22,7 @@ services:
       - postgres-inno-tech-data:/var/lib/postgresql/data
     environment:
       - POSTGRES_DB=inno-tech-data
-      - POSTGRES_USER=dmitrii
+      - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=dev
 volumes:
   postgres-inno-tech-data:
