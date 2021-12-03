@@ -5,12 +5,14 @@ namespace app\models;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
 use app\models\Project;
+use app\models\ProjectFile;
 
 /**
  * ProjectSearch represents the model behind the search form of `app\models\Project`.
  */
 class ProjectSearch extends Project
 {
+    public $search;
     /**
      * {@inheritdoc}
      */
@@ -18,7 +20,7 @@ class ProjectSearch extends Project
     {
         return [
             [['id', 'status', 'type', 'for_transport', 'certification'], 'integer'],
-            [['name', 'descr', 'cases', 'profit'], 'safe'],
+            [['name', 'descr', 'cases', 'profit', 'search'], 'safe'],
         ];
     }
 
@@ -54,6 +56,12 @@ class ProjectSearch extends Project
             // uncomment the following line if you do not want to return any records when validation fails
             // $query->where('0=1');
             return $dataProvider;
+        }
+        if($this->search) {
+            $query->andWhere("to_tsvector(name || ' ' ||descr || ' ' || cases || ' ' || profit) @@ plainto_tsquery(:search)", [":search" => $this->search]);
+            $subQuery = ProjectFile::find()->select('project_id')->andWhere("to_tsvector(content) @@ plainto_tsquery(:search)", [":search" => $this->search]);
+            $query->orWhere(['in', 'id', $subQuery]);
+            $query->orderBy("ts_rank(to_tsvector(name || ' ' ||descr || ' ' || cases || ' ' || profit), plainto_tsquery(:search)) DESC");            
         }
 
         // grid filtering conditions
