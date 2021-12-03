@@ -184,6 +184,9 @@ export const StartupsPage = () => {
               <Button variant={"outlined"}>Панель администратора</Button>
             </a>
           )}
+          <Link to={"/requests"}>
+            <Button variant={"outlined"}>Точечные запросы</Button>
+          </Link>
         </TopLine>
 
         <Grid container xs={12}>

@@ -17,6 +17,7 @@ import { selectUserData } from "./service/store/userSlice";
 import { userService } from "./service/user/user";
 import { LogoutPage } from "./ui/pages/LogoutPage";
 import { RequestPage } from "./ui/pages/RequestPage";
+import { RequestsPages } from "./ui/pages/RequestsPages";
 
 function App() {
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
@@ -38,6 +39,7 @@ function App() {
           exact
           component={protectedRoute(StartupPage)}
         />
+        <Route path={"/requests"} exact component={RequestsPages} />
         <Route path={"/request"} exact component={RequestPage} />
         <Route path={"/registration"} exact component={RegisterPage} />
         <Route path={"/login"} exact component={LoginPage} />
