@@ -3,14 +3,18 @@
 namespace app\models;
 
 use yii\base\Model;
+use app\models\Tag;
+use app\models\ProjectTag;
 use yii\data\ActiveDataProvider;
 use app\models\Project;
+use app\models\ProjectFile;
 
 /**
  * ProjectSearch represents the model behind the search form of `app\models\Project`.
  */
 class ProjectSearch extends Project
 {
+    public $search;
     /**
      * {@inheritdoc}
      */
@@ -18,7 +22,7 @@ class ProjectSearch extends Project
     {
         return [
             [['id', 'status', 'type', 'for_transport', 'certification'], 'integer'],
-            [['name', 'descr', 'cases', 'profit'], 'safe'],
+            [['name', 'descr', 'cases', 'profit', 'search'], 'safe'],
         ];
     }
 
@@ -54,6 +58,24 @@ class ProjectSearch extends Project
             // uncomment the following line if you do not want to return any records when validation fails
             // $query->where('0=1');
             return $dataProvider;
+        }
+        if($this->search) {            
+            //поиск FTS по основным полям карточки
+            $query->andWhere("to_tsvector(name || ' ' ||descr || ' ' || cases || ' ' || profit) @@ plainto_tsquery(:search)", [":search" => $this->search]);
+            
+            //поиск FTS по контенту файлов
+            $fileQuery = ProjectFile::find()->select('project_id')->andWhere("to_tsvector(content) @@ plainto_tsquery(:search)", [":search" => $this->search]);
+            $query->orWhere(['in', 'id', $fileQuery]);
+            
+            //поиск по тегам            
+            $tags = Tag::findAllInRequest($this->search);
+            if($tags) {
+                $ids = array_map(function(Tag $tag) {return $tag->id;}, $tags);
+                $tagQuery = ProjectTag::find()->select('project_id')->andWhere(['in', 'tag_id', $ids]);
+                $query->andWhere(['in', 'id', $tagQuery]);
+            }
+            
+            $query->orderBy("ts_rank(to_tsvector(name || ' ' ||descr || ' ' || cases || ' ' || profit), plainto_tsquery(:search)) DESC");
         }
 
         // grid filtering conditions

@@ -38,6 +38,13 @@ $this->params['breadcrumbs'][] = $this->title;
                 'format' => 'raw',
             ],
             [
+                'attribute' => 'search',
+                'value' => function(Project $model) {
+                    return null;
+                },
+                'format' => 'raw',
+            ],
+            [
                 'attribute' => 'status',
                 'value' => function(Project $model) use($statuses) {
                     return $statuses[$model->status];

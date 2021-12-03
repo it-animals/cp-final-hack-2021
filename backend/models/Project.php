@@ -107,7 +107,8 @@ class Project extends \yii\db\ActiveRecord
             'type' => 'Тип',
             'for_transport' => 'Для какой организации',
             'certification' => 'Сертификация',
-            'tagsRaw' => 'Теги'
+            'tagsRaw' => 'Теги',
+            'search' => 'Поиск'
         ];
     }
 
