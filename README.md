@@ -27,7 +27,7 @@
 	<li>HTML, CSS, JavaScript.</li>
 	<li>PHP 8, PostgreSQL.</li>
 	<li>Yii2.</li>
-  <li>React, SASS, Parcel, jQuery, Bootstrap, SCSS, BEM.</li>
+  <li>React, styled-components,TypeScript, Parcel, jQuery, Bootstrap, BEM.</li>
 	<li>Docker, Docker-Compose, Git.</li>
 	<li>Github.</li>
  </ul>
