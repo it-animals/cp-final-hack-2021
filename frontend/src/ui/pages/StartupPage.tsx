@@ -314,7 +314,7 @@ export const StartupPage: CT<unknown> = () => {
           {data && data?.teams?.length > 0 && (
             <Grid container mt={5} xs={12}>
               <Grid item xs={12}>
-                <HeadingSection title={"Команда"} />
+                <HeadingSection title={"Контакты"} />
               </Grid>
               {(data?.teams ?? []).map((item) => (
                 <Grid item xs={4} mt={2}>
