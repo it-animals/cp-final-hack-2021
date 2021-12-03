@@ -1,5 +1,7 @@
-init: down-clear up install-dependencies migrate create-admin set-permissions
+init: down-clear build up install-dependencies migrate create-admin set-permissions
 restart: down up
+build:
+	cd backend && docker-compose build
 up:
 	cd backend && docker-compose up -d
 down:
