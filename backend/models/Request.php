@@ -11,8 +11,10 @@ use Yii;
  * @property int $user_id
  * @property string $name
  * @property string|null $descr
+ * @property project_id integer
  *
  * @property RequestTag[] $requestTags
+ * @property Project $project
  * @property User $user
  */
 class Request extends \yii\db\ActiveRecord
@@ -33,9 +35,10 @@ class Request extends \yii\db\ActiveRecord
         return [
             [['user_id', 'name'], 'required'],
             [['user_id'], 'default', 'value' => null],
-            [['user_id'], 'integer'],
+            [['user_id', 'project_id'], 'integer'],
             [['descr'], 'string'],
             [['name'], 'string', 'max' => 200],
+            [['project_id'], 'exist', 'skipOnError' => true, 'targetClass' => Project::class, 'targetAttribute' => ['project_id' => 'id']],
             [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['user_id' => 'id']],
         ];
     }
@@ -47,9 +50,10 @@ class Request extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'Код',
-            'user_id' => 'Пользователь',
+            'user_id' => 'Автор',
             'name' => 'Наименование',
             'descr' => 'Описание',
+            'project_id' => 'Проект'
         ];
     }
 
@@ -71,5 +75,15 @@ class Request extends \yii\db\ActiveRecord
     public function getUser()
     {
         return $this->hasOne(User::className(), ['id' => 'user_id']);
+    }
+    
+    /**
+     * Gets query for [[Project]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getProject()
+    {
+        return $this->hasOne(Project::class, ['id' => 'project_id']);
     }
 }

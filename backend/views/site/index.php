@@ -19,6 +19,7 @@ $this->title = 'Витрина стартапов';
                 <h2>Стартапы</h2>
 
                 <?= Html::a('Стартапы', ['project/index']) ?><br>  
+                <?= Html::a('Запросы', ['request/index']) ?><br>  
             </div>
             <div class="col-lg-4">
                 <h2>Справочники</h2>

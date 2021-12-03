@@ -190,4 +190,13 @@ class Project extends \yii\db\ActiveRecord
     {
         return ['tags', 'projectFiles', 'teams'];
     }
+    
+    public static function getList(): array {
+        $models = Project::find()->orderBy('name')->all();
+        $list = [];
+        foreach($models as $model) {
+            $list[$model->id] = $model->name;
+        }
+        return $list;
+    }
 }

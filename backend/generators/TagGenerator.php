@@ -26,8 +26,9 @@ class TagGenerator {
 
     private string $content;
     
-    public function __construct(string $content) {        
-        $this->content = mb_strtolower(trim($content), 'utf-8');
+    public function __construct(string $content) {
+        
+        $this->content = mb_strtolower(trim(preg_replace('/\<.+?\>/ui', '', $content)), 'utf-8');
         self::loadWords();
     }
     

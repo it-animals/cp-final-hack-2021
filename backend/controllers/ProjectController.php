@@ -155,14 +155,10 @@ class ProjectController extends Controller
     
     public function actionGenerate($id) {
         $model = $this->findModel($id);
-        $content = $model->profit;
-        $text = preg_replace('/\<.+?\>/ui', '', $content);
-        $generator = new \app\generators\TagGenerator($text);
+        $generator = new \app\generators\TagGenerator($model->profit);
         $tags1 = $generator->generate();
         
-        $content = $model->cases;
-        $text = preg_replace('/\<.+?\>/ui', '', $content);
-        $generator = new \app\generators\TagGenerator($text);
+        $generator = new \app\generators\TagGenerator($model->cases);
         $tags2 = $generator->generate();
         $tags = array_merge($tags1, $tags2);
         if($tags) {
