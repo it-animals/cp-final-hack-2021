@@ -56,6 +56,22 @@ class Request extends \yii\db\ActiveRecord
             'project_id' => 'Проект'
         ];
     }
+    
+    public function fields()
+    {
+        return [
+
+            'id' => 'id',
+            'user_id' => 'user_id',
+            'name' => 'name',
+            'descr' => 'descr',
+            'project_id' => 'project_id',
+
+            'project_name' => function (Request $model) {
+                return $model->project ? $model->project->name : null;
+            },
+        ];
+    }
 
     /**
      * Gets query for [[RequestTags]].
