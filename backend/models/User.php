@@ -63,7 +63,7 @@ class User extends ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id' => 'ИД',
+            'id' => 'Код',
             'email' => 'Email',
             'fio' => 'ФИО',
             'avatar' => 'Аватар',
