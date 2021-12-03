@@ -81,4 +81,13 @@ class Tag extends \yii\db\ActiveRecord
         }
         return $tag;
     }
+    /**
+     * Найти теги в поисковой строке
+     * @param string $searchRequest
+     * @return Tag[]
+     */
+    public static function findAllInRequest(string $searchRequest): array {
+        $rawTags = explode(' ', mb_strtolower(trim($searchRequest), 'UTF-8'));
+        return Tag::findAll(['name' => $rawTags]);
+    }
 }

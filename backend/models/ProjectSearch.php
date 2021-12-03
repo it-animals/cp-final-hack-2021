@@ -3,6 +3,8 @@
 namespace app\models;
 
 use yii\base\Model;
+use app\models\Tag;
+use app\models\ProjectTag;
 use yii\data\ActiveDataProvider;
 use app\models\Project;
 use app\models\ProjectFile;
@@ -57,11 +59,23 @@ class ProjectSearch extends Project
             // $query->where('0=1');
             return $dataProvider;
         }
-        if($this->search) {
+        if($this->search) {            
+            //поиск FTS по основным полям карточки
             $query->andWhere("to_tsvector(name || ' ' ||descr || ' ' || cases || ' ' || profit) @@ plainto_tsquery(:search)", [":search" => $this->search]);
-            $subQuery = ProjectFile::find()->select('project_id')->andWhere("to_tsvector(content) @@ plainto_tsquery(:search)", [":search" => $this->search]);
-            $query->orWhere(['in', 'id', $subQuery]);
-            $query->orderBy("ts_rank(to_tsvector(name || ' ' ||descr || ' ' || cases || ' ' || profit), plainto_tsquery(:search)) DESC");            
+            
+            //поиск FTS по контенту файлов
+            $fileQuery = ProjectFile::find()->select('project_id')->andWhere("to_tsvector(content) @@ plainto_tsquery(:search)", [":search" => $this->search]);
+            $query->orWhere(['in', 'id', $fileQuery]);
+            
+            //поиск по тегам            
+            $tags = Tag::findAllInRequest($this->search);
+            if($tags) {
+                $ids = array_map(function(Tag $tag) {return $tag->id;}, $tags);
+                $tagQuery = ProjectTag::find()->select('project_id')->andWhere(['in', 'tag_id', $ids]);
+                $query->andWhere(['in', 'id', $tagQuery]);
+            }
+            
+            $query->orderBy("ts_rank(to_tsvector(name || ' ' ||descr || ' ' || cases || ' ' || profit), plainto_tsquery(:search)) DESC");
         }
 
         // grid filtering conditions
