@@ -179,4 +179,9 @@ class Project extends \yii\db\ActiveRecord
             3 => 'нет, не требуется',
         ];
     }
+
+    public function extraFields()
+    {
+        return ['tags', 'projectFiles'];
+    }
 }

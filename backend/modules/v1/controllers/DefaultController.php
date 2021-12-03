@@ -13,16 +13,14 @@ use yii\web\Response;
  *   @OA\Contact(
  *     email="support@example.com"
  *   ),
- *   @OA\SecurityScheme(
- *     securityScheme="bearerAuth",
- *     type="http",
- *     scheme="bearer",
- *     bearerFormat="JWT",
- *   ),
- *   @OA\Server(
- *     url="/",
- *     description="default"
- *   ),
+ * ),
+ * @OA\SecurityScheme(
+ *   securityScheme="bearerAuth",
+ *   in="header",
+ *   name="bearerAuth",
+ *   type="http",
+ *   scheme="bearer",
+ *   bearerFormat="JWT",
  * ),
  */
 class DefaultController extends Controller
