@@ -16,6 +16,7 @@ import {
   Tabs,
   TextField,
   Typography,
+  useTheme,
 } from "@mui/material";
 import { Startup } from "../components/Startup";
 import styled from "styled-components";
@@ -34,6 +35,11 @@ import { motion } from "framer-motion";
 import { rightToLeftAnimation } from "../lib/animations/rightToLeftAnimation";
 import { upToDownFn } from "../lib/animations/upToDownAnimate";
 import { tagsService } from "../../service/tag/tags";
+import { TopLine } from "../components/TopLine";
+import { useAppSelector } from "../../service/store/store";
+import { selectUserData } from "../../service/store/userSlice";
+import { userIsAdmin } from "../../domain/user";
+import { appConfig } from "../../config";
 
 const List = styled(motion.div)`
   display: flex;
@@ -78,7 +84,7 @@ export const StartupsPage = () => {
   const [data, setData] = useState<ProjectType[]>([]);
   const [tagData, setTagData] = useState<ProjectType["tags"]>([]);
   const snackbar = useSnackbar();
-
+  const userData = useAppSelector(selectUserData);
   const [filterState, setFilterState] = useUrlState({
     status: "0",
     search: "",
@@ -165,6 +171,14 @@ export const StartupsPage = () => {
   return (
     <>
       <PageTemplate>
+        <TopLine>
+          {userData?.user && userIsAdmin(userData.user) && (
+            <a href={appConfig.adminPanelUrl}>
+              <Button variant={"outlined"}>Панель администратора</Button>
+            </a>
+          )}
+        </TopLine>
+
         <Grid container xs={12}>
           <SearchLine>
             <Box sx={{ width: "70%", display: "flex", alignItems: "flex-end" }}>

@@ -30,6 +30,9 @@ import styled from "styled-components";
 import { useAppSelector } from "../../service/store/store";
 import { selectUserData } from "../../service/store/userSlice";
 import { userIsAdmin, userIsModerator } from "../../domain/user";
+import { TopLine } from "../components/TopLine";
+import { appConfig } from "../../config";
+import { Link } from "react-router-dom";
 
 const Doc = styled(Paper)`
   padding: 40px;
@@ -85,6 +88,16 @@ export const StartupPage: CT<unknown> = () => {
 
   return (
     <PageTemplate>
+      <TopLine>
+        <Link to={"/"}>
+          <Button variant={"outlined"}>К списку стартапов</Button>
+        </Link>
+        {userData?.user && userIsAdmin(userData.user) && (
+          <a href={appConfig.adminPanelUrl}>
+            <Button variant={"outlined"}>Панель администратора</Button>
+          </a>
+        )}
+      </TopLine>
       <Grid container>
         <Grid
           item
