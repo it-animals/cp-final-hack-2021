@@ -175,6 +175,7 @@ export const StartupsPage = () => {
     justify-content: space-between;
   `;
   console.log(filterState.tags.includes(4));
+  console.log(filterState.tags);
   return (
     <>
       <PageTemplate>
@@ -329,7 +330,9 @@ export const StartupsPage = () => {
                       <FormControlLabel
                         control={
                           <Checkbox
-                            checked={filterState.tags.includes(item.id)}
+                            checked={filterState.tags
+                              .split(",")
+                              .includes(String(item.id))}
                             onChange={(event, checked) =>
                               checked
                                 ? addTag(item.id)
