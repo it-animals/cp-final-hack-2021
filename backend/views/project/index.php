@@ -36,14 +36,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     return Html::a($model->name, ['view', 'id' => $model->id], ['data-pjax' => 0]);
                 },
                 'format' => 'raw',
-            ],
-            [
-                'attribute' => 'search',
-                'value' => function(Project $model) {
-                    return null;
-                },
-                'format' => 'raw',
-            ],
+            ],            
             [
                 'attribute' => 'status',
                 'value' => function(Project $model) use($statuses) {
