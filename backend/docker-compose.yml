@@ -1,0 +1,26 @@
+version: '2'
+services:
+  php:
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    volumes:
+      - ~/.composer-docker/cache:/root/.composer/cache:delegated
+      - ./:/app:delegated
+    depends_on:
+      - postgres
+    ports:
+      - '8000:80'
+  postgres:
+    image: postgres:latest
+    restart: always
+    expose:
+      - 5432
+    volumes:
+      - postgres-inno-tech-data:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_DB=inno-tech-data
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=dev
+volumes:
+  postgres-inno-tech-data:
