@@ -6,7 +6,7 @@ import { selectAppError } from "../../../service/store/application/appSlice";
 export const ErrorBoundary: React.FC<unknown> = ({ children }) => {
   const appError = useAppSelector(selectAppError);
   const history = useHistory();
-  console.log(history);
+
   const appErrors: { [key: number]: VoidFunction } = {
     "0": () => {
       history.push("/error");

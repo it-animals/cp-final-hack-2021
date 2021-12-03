@@ -169,8 +169,7 @@ export const StartupsPage = () => {
     align-items: flex-end;
     justify-content: space-between;
   `;
-  console.log(filterState.tags.includes(4));
-  console.log(filterState.tags);
+
   return (
     <>
       <PageTemplate>
