@@ -10,8 +10,8 @@ import {
   useTheme,
 } from "@mui/material";
 import { ContentWrapper } from "./ContentWrapper";
-import { Link as LinkSPA } from "react-router-dom";
-import { Link } from "@mui/material";
+import { Link as LinkSPA, useParams } from "react-router-dom";
+
 import { _variables } from "../styles/_variables";
 import { GorSeparator } from "./GorSeparator";
 import {
@@ -101,177 +101,182 @@ export const Startup: CT<ProjectType> = ({
   certification,
   for_transport,
   teams,
+  id,
 }) => {
   const [anchorEl, setAnchorEl] = React.useState(null);
-
   const handlePopoverOpen = (event: any) => {
     setAnchorEl(event.currentTarget);
   };
 
   const handlePopoverClose = () => {
-    console.log("close");
     setAnchorEl(null);
   };
 
   const open = Boolean(anchorEl);
   const theme = useTheme();
   return (
-    <Element
-      className={className}
-      onMouseEnter={handlePopoverOpen}
-      onMouseLeave={handlePopoverClose}
-      elevation={2}
-    >
-      {/*<LinkSPA to={"/startaps/123"}>*/}
-      {/*<Link>*/}
-      <OverFlowText variant={"h6"}>{name}</OverFlowText>
-      <ChipContainer>
-        {tags.map((item) => (
-          <Chip label={item.name} size="small" defaultValue={item.name} />
-        ))}
-      </ChipContainer>
-      {/*</Link>*/}
-      {/*</LinkSPA>*/}
-
-      <PopoverComponent
-        id="mouse-over-popover"
-        container={document.getElementById("list")!}
-        sx={{
-          pointerEvents: "none",
-        }}
-        open={open}
-        anchorEl={anchorEl}
-        anchorOrigin={{
-          vertical: "top",
-          horizontal: "right",
-        }}
-        onClose={handlePopoverClose}
-        disableRestoreFocus
+    <LinkSPA to={`/startup/${id}`}>
+      <Element
+        className={className}
+        onMouseEnter={handlePopoverOpen}
+        onMouseLeave={handlePopoverClose}
+        elevation={2}
       >
-        <PopoverWrapper>
-          <PopoverElement elevation={3}>
-            <PopoverHeading fontSize={16} fontWeight={"bold"} marginBottom={2}>
-              {name}
-            </PopoverHeading>
-            <PopoverDescription fontSize={14} color={_variables.textSecond}>
-              {descr.replace(/<[^>]*>?/gm, "")}
-            </PopoverDescription>
+        {/*<LinkSPA to={"/startaps/123"}>*/}
+        {/*<Link>*/}
+        <OverFlowText variant={"h6"}>{name}</OverFlowText>
+        <ChipContainer>
+          {tags.map((item) => (
+            <Chip label={item.name} size="small" defaultValue={item.name} />
+          ))}
+        </ChipContainer>
+        {/*</Link>*/}
+        {/*</LinkSPA>*/}
 
-            <GorSeparator width={30} mrn={11} />
-            <Grid container>
-              <Grid item xs={12}>
-                <Typography
-                  fontWeight={"bold"}
-                  color={theme.palette.primary.main}
-                  fontSize={14}
-                >
-                  Статус проекта:&nbsp;
-                  <span
-                    style={{
-                      fontWeight: "normal",
-                      color: _variables.textColor,
-                    }}
-                  >
-                    {getStatusProjectById(status)}
-                  </span>
-                </Typography>
-                <Typography
-                  fontWeight={"bold"}
-                  color={theme.palette.primary.main}
-                  fontSize={14}
-                  mt={1}
-                >
-                  Направление:&nbsp;
-                  <span
-                    style={{
-                      fontWeight: "normal",
-                      color: _variables.textColor,
-                    }}
-                  >
-                    {getTypeProjectById(type)}
-                  </span>
-                </Typography>
-                <Typography
-                  fontWeight={"bold"}
-                  color={theme.palette.primary.main}
-                  fontSize={14}
-                  mt={1}
-                >
-                  Сертификация:&nbsp;
-                  <span
-                    style={{
-                      fontWeight: "normal",
-                      color: _variables.textColor,
-                    }}
-                  >
-                    {getCertProjectById(certification)}
-                  </span>
-                </Typography>
-                <Typography
-                  fontWeight={"bold"}
-                  color={theme.palette.primary.main}
-                  fontSize={14}
-                  marginTop={1}
-                >
-                  Проект для:&nbsp;
-                  <span
-                    style={{
-                      fontWeight: "normal",
-                      color: _variables.textColor,
-                    }}
-                  >
-                    {getForProjectById(for_transport)}
-                  </span>
-                </Typography>
-                {teams.length > 0 && (
+        <PopoverComponent
+          id="mouse-over-popover"
+          container={document.getElementById("list")!}
+          sx={{
+            pointerEvents: "none",
+          }}
+          open={open}
+          anchorEl={anchorEl}
+          anchorOrigin={{
+            vertical: "top",
+            horizontal: "right",
+          }}
+          onClose={handlePopoverClose}
+          disableRestoreFocus
+        >
+          <PopoverWrapper>
+            <PopoverElement elevation={3}>
+              <PopoverHeading
+                fontSize={16}
+                fontWeight={"bold"}
+                marginBottom={2}
+              >
+                {name}
+              </PopoverHeading>
+              <PopoverDescription fontSize={14} color={_variables.textSecond}>
+                {descr.replace(/<[^>]*>?/gm, "")}
+              </PopoverDescription>
+
+              <GorSeparator width={30} mrn={11} />
+              <Grid container>
+                <Grid item xs={12}>
                   <Typography
                     fontWeight={"bold"}
                     color={theme.palette.primary.main}
                     fontSize={14}
-                    mt={1}
                   >
-                    Ответственный:&nbsp;
+                    Статус проекта:&nbsp;
                     <span
                       style={{
                         fontWeight: "normal",
                         color: _variables.textColor,
                       }}
                     >
-                      {teams.find((item) => item.is_owner)!.fio}
+                      {getStatusProjectById(status)}
                     </span>
                   </Typography>
-                )}
+                  <Typography
+                    fontWeight={"bold"}
+                    color={theme.palette.primary.main}
+                    fontSize={14}
+                    mt={1}
+                  >
+                    Направление:&nbsp;
+                    <span
+                      style={{
+                        fontWeight: "normal",
+                        color: _variables.textColor,
+                      }}
+                    >
+                      {getTypeProjectById(type)}
+                    </span>
+                  </Typography>
+                  <Typography
+                    fontWeight={"bold"}
+                    color={theme.palette.primary.main}
+                    fontSize={14}
+                    mt={1}
+                  >
+                    Сертификация:&nbsp;
+                    <span
+                      style={{
+                        fontWeight: "normal",
+                        color: _variables.textColor,
+                      }}
+                    >
+                      {getCertProjectById(certification)}
+                    </span>
+                  </Typography>
+                  <Typography
+                    fontWeight={"bold"}
+                    color={theme.palette.primary.main}
+                    fontSize={14}
+                    marginTop={1}
+                  >
+                    Проект для:&nbsp;
+                    <span
+                      style={{
+                        fontWeight: "normal",
+                        color: _variables.textColor,
+                      }}
+                    >
+                      {getForProjectById(for_transport)}
+                    </span>
+                  </Typography>
+                  {teams.length > 0 && (
+                    <Typography
+                      fontWeight={"bold"}
+                      color={theme.palette.primary.main}
+                      fontSize={14}
+                      mt={1}
+                    >
+                      Ответственный:&nbsp;
+                      <span
+                        style={{
+                          fontWeight: "normal",
+                          color: _variables.textColor,
+                        }}
+                      >
+                        {teams.find((item) => item.is_owner)!.fio}
+                      </span>
+                    </Typography>
+                  )}
+                </Grid>
+                <GorSeparator width={30} mrn={11} />
+                <Grid item xs={12}>
+                  <Typography
+                    fontWeight={"bold"}
+                    color={theme.palette.primary.main}
+                    fontSize={13}
+                  >
+                    Теги:
+                  </Typography>
+                  <Box
+                    display={"flex"}
+                    justifyContent={"flex-start"}
+                    flexWrap={"wrap"}
+                    paddingTop={"3px"}
+                    columnGap={"5px"}
+                    rowGap={"5px"}
+                  >
+                    {tags.map((item) => (
+                      <Chip
+                        label={item.name}
+                        size="small"
+                        defaultValue={item.name}
+                      />
+                    ))}
+                  </Box>
+                </Grid>
               </Grid>
-              <GorSeparator width={30} mrn={11} />
-              <Grid item xs={12}>
-                <Typography
-                  fontWeight={"bold"}
-                  color={theme.palette.primary.main}
-                  fontSize={13}
-                >
-                  Теги:
-                </Typography>
-                <Box
-                  display={"flex"}
-                  justifyContent={"flex-start"}
-                  flexWrap={"wrap"}
-                  paddingTop={"3px"}
-                  columnGap={"5px"}
-                  rowGap={"5px"}
-                >
-                  {tags.map((item) => (
-                    <Chip
-                      label={item.name}
-                      size="small"
-                      defaultValue={item.name}
-                    />
-                  ))}
-                </Box>
-              </Grid>
-            </Grid>
-          </PopoverElement>
-        </PopoverWrapper>
-      </PopoverComponent>
-    </Element>
+            </PopoverElement>
+          </PopoverWrapper>
+        </PopoverComponent>
+      </Element>
+    </LinkSPA>
   );
 };

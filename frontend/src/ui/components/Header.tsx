@@ -13,6 +13,7 @@ import { Logo } from "./Logo";
 import { useAppSelector } from "../../service/store/store";
 import { selectUserData } from "../../service/store/userSlice";
 import React, { useEffect, useRef, useState } from "react";
+import { NavLink } from "react-router-dom";
 
 const AppBarElement = styled(AppBar)``;
 
@@ -50,9 +51,11 @@ export const Header: CT<unknown> = () => {
         <AppBarElement variant={"elevation"} position="static">
           <Toolbar style={{ width: "100%" }}>
             <Content>
-              <a href="/">
-                <Logo color={"secondary"} />
-              </a>
+              <Box display={"flex"} alignItems={"center"} columnGap={"100px"}>
+                <a href="/">
+                  <Logo color={"secondary"} />
+                </a>
+              </Box>
               <div id={"avatar"}>
                 <MyAvatar
                   onClick={() => setOpen(true)}

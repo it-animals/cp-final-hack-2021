@@ -10,6 +10,18 @@ import {
 export const projectService = {
   path: "project/",
 
+  getById(id: number) {
+    return axios.get<{ projects: ProjectType[] }>(
+      this.path +
+        `index?expand=tags,teams,projectFiles&ProjectSearch[id]=${id}`,
+      {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("JWT")}`,
+        },
+      }
+    );
+  },
+
   list({
     status,
     type,
