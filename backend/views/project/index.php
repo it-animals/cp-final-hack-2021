@@ -12,7 +12,7 @@ use app\models\Project;
 /* @var $transports array */
 /* @var $certifications array */
 
-$this->title = 'Проекты';
+$this->title = 'Стартапы';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="project-index">

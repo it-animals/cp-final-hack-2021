@@ -4,6 +4,7 @@ namespace app\controllers;
 
 use app\models\Project;
 use app\models\ProjectSearch;
+use app\models\ProjectFileSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -58,12 +59,26 @@ class ProjectController extends Controller
      */
     public function actionView($id)
     {
+        $model = $this->findModel($id);
+        $projectFileContent = $this->renderProjectFileIndex($model);
         return $this->render('view', [
-            'model' => $this->findModel($id),
+            'model' => $model,
             'statuses' => Project::getStatusList(),
             'types' => Project::getTypeList(),
             'transports' => Project::getTransportList(),
             'certifications' => Project::getCertificationList(),
+            'projectFileContent' => $projectFileContent,
+        ]);
+    }
+    
+    private function renderProjectFileIndex(Project $project) {
+        $searchModel = new ProjectFileSearch();
+        $searchModel->project_id = $project->id;
+        $dataProvider = $searchModel->search($this->request->queryParams);
+
+        return $this->renderPartial('/project-file/index', [
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
         ]);
     }
 
@@ -149,6 +164,6 @@ class ProjectController extends Controller
             return $model;
         }
 
-        throw new NotFoundHttpException('The requested page does not exist.');
+        throw new NotFoundHttpException('Такого проекта не существует');
     }
 }

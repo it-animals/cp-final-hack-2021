@@ -12,8 +12,8 @@ use dosamigos\ckeditor\CKEditor;
 /* @var $transports array */
 /* @var $certifications array */
 
-$this->title = 'Создать проект';
-$this->params['breadcrumbs'][] = ['label' => 'Проекты', 'url' => ['index']];
+$this->title = $model->isNewRecord ? 'Создать' : 'Изменить';
+$this->params['breadcrumbs'][] = ['label' => 'Стартапы', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="project-create">
