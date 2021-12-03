@@ -14,17 +14,21 @@ export const projectService = {
     status,
     type,
     tags,
+    search,
+    sort,
   }: {
     status?: ProjectStatus | 0;
-    type?: ProjectTypesType;
+    type?: ProjectTypesType | 0;
     tags?: string;
+    search?: string;
+    sort?: string;
   }) {
-    console.log(tags);
-    console.log(status);
     return axios.get<{ projects: ProjectType[] }>(
       this.path +
         "index" +
-        "?expand=tags&sort=id" +
+        "?expand=tags,teams" +
+        `${sort ? `&sort=${sort}` : "&sort=id"}` +
+        `${search ? `&ProjectSearch[search]=${search}` : ""}` +
         `${status ? `&ProjectSearch[status]=${status}` : ""}` +
         `${type ? `&ProjectSearch[type]=${type}` : ""}` +
         `${

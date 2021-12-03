@@ -44,8 +44,9 @@ export type ProjectType = {
   status: ProjectStatus;
   type: ProjectTypesType;
   tags: { id: string; name: string }[];
-  for_transropt: ProjectForTransportType;
+  for_transport: ProjectForTransportType;
   certification: ProjectCertificationType;
+  teams: { fio: string; is_owner: boolean }[];
 };
 
 const certCatalog = {

@@ -81,6 +81,14 @@ const PopoverDescription = styled(Typography)`
   -webkit-box-orient: vertical;
 `;
 
+const OverFlowText = styled(Typography)`
+  display: inline-block;
+  white-space: nowrap;
+  width: 100%;
+  overflow: hidden !important;
+  text-overflow: ellipsis;
+`;
+
 export const Startup: CT<ProjectType> = ({
   name,
 
@@ -91,7 +99,8 @@ export const Startup: CT<ProjectType> = ({
   type,
   status,
   certification,
-  for_transropt,
+  for_transport,
+  teams,
 }) => {
   const [anchorEl, setAnchorEl] = React.useState(null);
 
@@ -115,7 +124,7 @@ export const Startup: CT<ProjectType> = ({
     >
       {/*<LinkSPA to={"/startaps/123"}>*/}
       {/*<Link>*/}
-      <Typography variant={"h6"}>{name}</Typography>
+      <OverFlowText variant={"h6"}>{name}</OverFlowText>
       <ChipContainer>
         {tags.map((item) => (
           <Chip label={item.name} size="small" defaultValue={item.name} />
@@ -144,11 +153,10 @@ export const Startup: CT<ProjectType> = ({
             <PopoverHeading fontSize={16} fontWeight={"bold"} marginBottom={2}>
               {name}
             </PopoverHeading>
-            <PopoverDescription
-              fontSize={14}
-              color={_variables.textSecond}
-              dangerouslySetInnerHTML={{ __html: descr }}
-            />
+            <PopoverDescription fontSize={14} color={_variables.textSecond}>
+              {descr.replace(/<[^>]*>?/gm, "")}
+            </PopoverDescription>
+
             <GorSeparator width={30} mrn={11} />
             <Grid container>
               <Grid item xs={12}>
@@ -212,25 +220,27 @@ export const Startup: CT<ProjectType> = ({
                       color: _variables.textColor,
                     }}
                   >
-                    {getForProjectById(for_transropt)}
+                    {getForProjectById(for_transport)}
                   </span>
                 </Typography>
-                <Typography
-                  fontWeight={"bold"}
-                  color={theme.palette.primary.main}
-                  fontSize={14}
-                  mt={1}
-                >
-                  Ответственный:&nbsp;
-                  <span
-                    style={{
-                      fontWeight: "normal",
-                      color: _variables.textColor,
-                    }}
+                {teams.length > 0 && (
+                  <Typography
+                    fontWeight={"bold"}
+                    color={theme.palette.primary.main}
+                    fontSize={14}
+                    mt={1}
                   >
-                    Петров Петя
-                  </span>
-                </Typography>
+                    Ответственный:&nbsp;
+                    <span
+                      style={{
+                        fontWeight: "normal",
+                        color: _variables.textColor,
+                      }}
+                    >
+                      {teams.find((item) => item.is_owner)!.fio}
+                    </span>
+                  </Typography>
+                )}
               </Grid>
               <GorSeparator width={30} mrn={11} />
               <Grid item xs={12}>
