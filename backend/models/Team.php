@@ -86,4 +86,14 @@ class Team extends \yii\db\ActiveRecord
             $model->save();
         }        
     }
+
+    public function fields()
+    {
+        return [
+            'fio' => function (Team $model) {
+                return $model->user->fio;
+            },
+            'is_owner' => 'is_owner',
+        ];
+    }
 }

@@ -188,6 +188,6 @@ class Project extends \yii\db\ActiveRecord
 
     public function extraFields()
     {
-        return ['tags', 'projectFiles'];
+        return ['tags', 'projectFiles', 'teams'];
     }
 }

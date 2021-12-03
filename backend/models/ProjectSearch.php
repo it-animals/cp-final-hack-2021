@@ -8,6 +8,8 @@ use app\models\ProjectTag;
 use yii\data\ActiveDataProvider;
 use app\models\Project;
 use app\models\ProjectFile;
+use function array_keys;
+use function is_array;
 
 /**
  * ProjectSearch represents the model behind the search form of `app\models\Project`.
@@ -15,6 +17,7 @@ use app\models\ProjectFile;
 class ProjectSearch extends Project
 {
     public $search;
+    public $tags = null;
     /**
      * {@inheritdoc}
      */
@@ -22,7 +25,7 @@ class ProjectSearch extends Project
     {
         return [
             [['id', 'status', 'type', 'for_transport', 'certification'], 'integer'],
-            [['name', 'descr', 'cases', 'profit', 'search'], 'safe'],
+            [['name', 'descr', 'cases', 'profit', 'search', 'tags'], 'safe'],
         ];
     }
 
@@ -76,6 +79,11 @@ class ProjectSearch extends Project
             }
             
             $query->orderBy("ts_rank(to_tsvector(name || ' ' ||descr || ' ' || cases || ' ' || profit), plainto_tsquery(:search)) DESC");
+        }
+
+        if ($this->tags && is_array($this->tags)) {
+            $tagQuery = ProjectTag::find()->select('project_id')->andWhere(['in', 'tag_id', $this->tags]);
+            $query->andWhere(['in', 'id', $tagQuery]);
         }
 
         // grid filtering conditions

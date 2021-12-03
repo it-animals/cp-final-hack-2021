@@ -7,8 +7,10 @@ import { ThemeProvider } from "@mui/material";
 import { MUITheme } from "../../styles/_MUITheme";
 import { SnackbarProvider } from "notistack";
 import SnackbarCloseButton from "../../components/SnackbarCloseButton";
+import { useGlobalRequestConfiguration } from "./useGlobalRequestConfiguration";
 
 export const AppLayout: CT<unknown> = ({ children }) => {
+  useGlobalRequestConfiguration();
   return (
     <>
       <GlobalStyle />
