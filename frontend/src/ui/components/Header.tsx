@@ -5,6 +5,7 @@ import { Logo } from "./Logo";
 import { useAppSelector } from "../../service/store/store";
 import { selectUserData } from "../../service/store/userSlice";
 import React, { useState } from "react";
+import { appConfig } from "../../config";
 
 const AppBarElement = styled(AppBar)``;
 
@@ -40,10 +41,17 @@ export const Header: CT<unknown> = () => {
         <AppBarElement variant={"elevation"} position="static">
           <Toolbar style={{ width: "100%" }}>
             <Content>
-              <Box display={"flex"} alignItems={"center"} columnGap={"100px"}>
+              <Box display={"flex"} alignItems={"center"} columnGap={"30px"}>
                 <a href="/">
                   <Logo color={"secondary"} />
                 </a>
+                {appConfig.appName && (
+                  <a href="/">
+                    <Typography color={"white"} variant={"h5"}>
+                      {appConfig.appName}
+                    </Typography>
+                  </a>
+                )}
               </Box>
               <div id={"avatar"}>
                 <MyAvatar

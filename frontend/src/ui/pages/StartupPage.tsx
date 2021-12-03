@@ -31,6 +31,7 @@ import { selectUserData } from "../../service/store/userSlice";
 import { userIsAdmin, userIsModerator } from "../../domain/user";
 import { TopLine } from "../components/TopLine";
 import { appConfig } from "../../config";
+import { useTitle } from "react-use";
 
 const Doc = styled(Paper)`
   padding: 40px;
@@ -65,6 +66,8 @@ export const StartupPage: CT<unknown> = () => {
   const snackbar = useSnackbar();
   const [data, setData] = useState<ProjectType | null>(null);
   const userData = useAppSelector(selectUserData);
+
+  useTitle((data?.name ?? "") + appConfig.titleApp);
 
   const load = async () => {
     try {

@@ -24,6 +24,8 @@ import { useEffect, useState } from "react";
 import { useSnackbar } from "notistack";
 import { userService } from "../../service/user/user";
 import { selectUserData } from "../../service/store/userSlice";
+import { useTitle } from "react-use";
+import { appConfig } from "../../config";
 
 const Main = styled.main`
   width: 100%;
@@ -81,6 +83,8 @@ export const RegisterPage: CT<unknown> = () => {
   const history = useHistory();
   const snackbar = useSnackbar();
   const userData = useAppSelector(selectUserData);
+
+  useTitle("Регистрация" + appConfig.titleApp);
 
   useEffect(() => {
     if (userService.isAuth() && userData) {

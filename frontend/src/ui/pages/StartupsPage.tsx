@@ -35,6 +35,7 @@ import { selectUserData } from "../../service/store/userSlice";
 import { userIsAdmin } from "../../domain/user";
 import { appConfig } from "../../config";
 import { Link } from "react-router-dom";
+import { useTitle } from "react-use";
 
 const List = styled(motion.div)`
   display: flex;
@@ -92,6 +93,8 @@ export const StartupsPage = () => {
     sort: "-id",
     tags: "",
   });
+
+  useTitle("Стартапы" + appConfig.titleApp);
 
   const load = async () => {
     setLoad(true);

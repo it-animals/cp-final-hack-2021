@@ -12,6 +12,8 @@ import { upToDownFn } from "../lib/animations/upToDownAnimate";
 import { useState } from "react";
 import { useSnackbar } from "notistack";
 import { requestService } from "../../service/request/request";
+import { useTitle } from "react-use";
+import { appConfig } from "../../config";
 
 const Main = styled.main`
   width: 100%;
@@ -61,6 +63,8 @@ export const RequestPage: CT<unknown> = () => {
   const [isLoad, setLoad] = useState(false);
   const history = useHistory();
   const snackbar = useSnackbar();
+
+  useTitle("Форма запроса" + appConfig.titleApp);
 
   const formSubmitHandler = async (values: {
     name: string;

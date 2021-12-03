@@ -22,6 +22,7 @@ import { RequestType } from "../../domain/request";
 import { useSnackbar } from "notistack";
 import { motion } from "framer-motion";
 import { upToDownFn } from "../lib/animations/upToDownAnimate";
+import { useTitle } from "react-use";
 
 const RequestContainer = styled.div`
   width: 100%;
@@ -43,6 +44,8 @@ export const RequestsPages: CT<unknown> = () => {
   const history = useHistory();
   const snackbar = useSnackbar();
   const userData = useAppSelector(selectUserData);
+
+  useTitle("Точечные запросы" + appConfig.titleApp);
 
   const load = async () => {
     try {

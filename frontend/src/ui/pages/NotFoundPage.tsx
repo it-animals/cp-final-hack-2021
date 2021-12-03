@@ -1,7 +1,10 @@
 import { PageTemplate } from "../components/PageTemplate";
 import { Button, Grid, Typography } from "@mui/material";
+import { useTitle } from "react-use";
+import { appConfig } from "../../config";
 
 export const NotFoundPage: CT<unknown> = () => {
+  useTitle("Страница не существует" + appConfig.titleApp);
   return (
     <>
       <PageTemplate>

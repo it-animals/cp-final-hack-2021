@@ -22,6 +22,8 @@ import { useAppDispatch, useAppSelector } from "../../service/store/store";
 import { selectUserData, setUserData } from "../../service/store/userSlice";
 import { useEffect, useState } from "react";
 import { useSnackbar } from "notistack";
+import { useTitle } from "react-use";
+import { appConfig } from "../../config";
 
 const Main = styled.main`
   width: 100%;
@@ -76,6 +78,8 @@ export const LoginPage: CT<unknown> = () => {
   const history = useHistory();
   const snackbar = useSnackbar();
   const userData = useAppSelector(selectUserData);
+
+  useTitle("Форма входа" + appConfig.titleApp);
 
   useEffect(() => {
     if (userService.isAuth() && userData) {

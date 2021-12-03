@@ -7,5 +7,6 @@ export const appConfig = {
     ? "http://localhost:8000/v1/"
     : `http://${process.env.REACT_APP_API_PATH}:${process.env.REACT_APP_API_PORT}/v1/`,
   adminPanelUrl: `http://${process.env.REACT_APP_API_PATH}:${process.env.REACT_APP_API_PORT}`,
-  titleApp: " | ",
+  titleApp: " | ТиМ",
+  appName: "",
 };

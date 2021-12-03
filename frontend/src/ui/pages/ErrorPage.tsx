@@ -1,7 +1,10 @@
 import { Button, Grid, Typography } from "@mui/material";
 import { PageTemplate } from "../components/PageTemplate";
+import { appConfig } from "../../config";
+import { useTitle } from "react-use";
 
 export const ErrorPage: CT<unknown> = () => {
+  useTitle("Ошибка" + appConfig.titleApp);
   return (
     <>
       <PageTemplate>
