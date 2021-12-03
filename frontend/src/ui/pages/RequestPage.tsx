@@ -82,7 +82,7 @@ export const RequestPage: CT<unknown> = () => {
         history.push("/");
       }, 700);
     } catch (e) {
-      snackbar.enqueueSnackbar("Запрос отправлен", { variant: "success" });
+      snackbar.enqueueSnackbar("Ошибка отправки запроса", { variant: "warning" });
       setTimeout(() => {
         history.push("/");
       }, 700);
