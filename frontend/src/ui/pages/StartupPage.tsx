@@ -82,6 +82,7 @@ export const StartupPage: CT<unknown> = () => {
   useEffect(() => {
     if (!Number(id)) history.push("/");
     load();
+    //eslint-disable-next-line
   }, []);
 
   return (
@@ -293,7 +294,7 @@ export const StartupPage: CT<unknown> = () => {
                 {data?.projectFiles.map((item) => (
                   <>
                     <Box minWidth={200}>
-                      <a href={item.url} target={"_blank"}>
+                      <a rel="noreferrer" href={item.url} target={"_blank"}>
                         <File>
                           <Typography>
                             {`${item.name}.${item.extension}`}
@@ -348,7 +349,11 @@ export const StartupPage: CT<unknown> = () => {
                         {userData?.user &&
                           (userIsModerator(userData?.user) ||
                             userIsAdmin(userData?.user)) && (
-                            <a target={"_blank"} href={`mailto:${item.email}`}>
+                            <a
+                              rel="noreferrer"
+                              target={"_blank"}
+                              href={`mailto:${item.email}`}
+                            >
                               <Button
                                 style={{ width: 200 }}
                                 variant={"contained"}

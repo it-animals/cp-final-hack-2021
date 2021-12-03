@@ -4,7 +4,7 @@ import styled from "styled-components";
 import { Logo } from "./Logo";
 import { useAppSelector } from "../../service/store/store";
 import { selectUserData } from "../../service/store/userSlice";
-import React, { useRef, useState } from "react";
+import React, { useState } from "react";
 
 const AppBarElement = styled(AppBar)``;
 
@@ -31,11 +31,9 @@ const MyAvatar = styled(Avatar)`
 
 export const Header: CT<unknown> = () => {
   const userData = useAppSelector(selectUserData);
-  const anchorEl = useRef<HTMLDivElement | null>(null);
   const [open, setOpen] = useState(false);
 
   const handleClose = () => setOpen(false);
-  console.log(open);
   return (
     <header>
       <Box>

@@ -27,11 +27,6 @@ const Element = styled(Paper)`
   padding: 10px 20px;
 `;
 
-const TextContent = styled.div`
-  display: flex;
-  flex-direction: column;
-`;
-
 const ChipContainer = styled.div`
   display: flex;
   column-gap: 10px;
@@ -121,16 +116,12 @@ export const Startup: CT<ProjectType> = ({
         onMouseLeave={handlePopoverClose}
         elevation={2}
       >
-        {/*<LinkSPA to={"/startaps/123"}>*/}
-        {/*<Link>*/}
         <OverFlowText variant={"h6"}>{name}</OverFlowText>
         <ChipContainer>
           {tags.map((item) => (
             <Chip label={item.name} size="small" defaultValue={item.name} />
           ))}
         </ChipContainer>
-        {/*</Link>*/}
-        {/*</LinkSPA>*/}
 
         <PopoverComponent
           id="mouse-over-popover"

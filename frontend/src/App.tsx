@@ -4,7 +4,6 @@ import { ErrorPage } from "./ui/pages/ErrorPage";
 import { NotFoundPage } from "./ui/pages/NotFoundPage";
 import { UnauthorizedPage } from "./ui/pages/UnauthorizedPage";
 import { ForbiddenPage } from "./ui/pages/ForbiddenPage";
-import { useSnackbar } from "notistack";
 import { LoginPage } from "./ui/pages/LoginPage";
 import { RegisterPage } from "./ui/pages/RegisterPage";
 import { StartupsPage } from "./ui/pages/StartupsPage";
@@ -17,8 +16,6 @@ import { RequestPage } from "./ui/pages/RequestPage";
 import { RequestsPages } from "./ui/pages/RequestsPages";
 
 function App() {
-  const { enqueueSnackbar, closeSnackbar } = useSnackbar();
-
   const userData = useAppSelector(selectUserData);
 
   const protectedRoute =

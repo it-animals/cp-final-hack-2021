@@ -9,8 +9,6 @@ import { useHistory } from "react-router-dom";
 import * as yup from "yup";
 import { motion } from "framer-motion";
 import { upToDownFn } from "../lib/animations/upToDownAnimate";
-import { useAppDispatch, useAppSelector } from "../../service/store/store";
-import { selectUserData } from "../../service/store/userSlice";
 import { useState } from "react";
 import { useSnackbar } from "notistack";
 import { requestService } from "../../service/request/request";
@@ -60,11 +58,9 @@ const validationSchema = yup.object().shape({
 });
 
 export const RequestPage: CT<unknown> = () => {
-  const dispatch = useAppDispatch();
   const [isLoad, setLoad] = useState(false);
   const history = useHistory();
   const snackbar = useSnackbar();
-  const userData = useAppSelector(selectUserData);
 
   const formSubmitHandler = async (values: {
     name: string;
@@ -73,7 +69,7 @@ export const RequestPage: CT<unknown> = () => {
     setLoad(true);
 
     try {
-      const data = await requestService.create(values);
+      await requestService.create(values);
       snackbar.enqueueSnackbar("Запрос отправлен", { variant: "success" });
       setTimeout(() => {
         history.push("/");

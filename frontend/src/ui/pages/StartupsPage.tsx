@@ -80,7 +80,6 @@ const StartupElem = motion(Startup);
 
 export const StartupsPage = () => {
   const [inputSearch, setInputSearch] = useState("");
-  const [existSearch, setExitSearch] = useState(false);
   const [isLoad, setLoad] = useState(false);
   const [data, setData] = useState<ProjectType[]>([]);
   const [tagData, setTagData] = useState<ProjectType["tags"]>([]);
@@ -138,11 +137,13 @@ export const StartupsPage = () => {
 
   useEffect(() => {
     load();
+    //eslint-disable-next-line
   }, [filterState]);
 
   useEffect(() => {
     loadTags();
     setInputSearch(filterState.search);
+    //eslint-disable-next-line
   }, []);
 
   const changeSearchHandler = (

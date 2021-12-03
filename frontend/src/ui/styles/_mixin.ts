@@ -20,6 +20,7 @@ export function hexToRgba(hex: string, opacity: string | number) {
   return `${result},${opacity}`;
 }
 
+//eslint-disable-next-line
 class AnyIfEmpty<T> {}
 export const mxm = (
   width: number,

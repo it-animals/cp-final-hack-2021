@@ -19,7 +19,7 @@ import { Link as LinkSPA, useHistory } from "react-router-dom";
 import * as yup from "yup";
 import { motion } from "framer-motion";
 import { upToDownFn } from "../lib/animations/upToDownAnimate";
-import { useAppDispatch, useAppSelector } from "../../service/store/store";
+import { useAppSelector } from "../../service/store/store";
 import { useEffect, useState } from "react";
 import { useSnackbar } from "notistack";
 import { userService } from "../../service/user/user";
@@ -77,16 +77,18 @@ const validationSchema = yup.object().shape({
 });
 
 export const RegisterPage: CT<unknown> = () => {
-  const dispatch = useAppDispatch();
   const [isLoad, setLoad] = useState(false);
   const history = useHistory();
   const snackbar = useSnackbar();
   const userData = useAppSelector(selectUserData);
+
   useEffect(() => {
     if (userService.isAuth() && userData) {
       history.push("/");
     }
+    //eslint-disable-next-line
   }, []);
+
   const formSubmitHandler = async (values: {
     email: string;
     fio: string;

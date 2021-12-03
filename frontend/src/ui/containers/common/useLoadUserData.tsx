@@ -8,10 +8,10 @@ export const useLoadUserData = () => {
   useEffect(() => {
     (async () => {
       if (userService.isAuth()) {
-        console.log("123");
         const data = await userService.info(localStorage!.getItem("JWT")!);
         dispatch(setUserData(data.data.user));
       }
     })();
+    //eslint-disable-next-line
   }, []);
 };

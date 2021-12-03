@@ -18,14 +18,6 @@ const Figure = styled.figure<{ variant: "big" | "normal" }>`
   }
 `;
 
-const Text = styled.text`
-  font-size: 14px;
-  font-style: normal;
-  font-weight: 500;
-  line-height: 18px;
-  text-align: right;
-`;
-
 export const Avatar: CT<{
   name?: string;
   isShowName?: boolean;

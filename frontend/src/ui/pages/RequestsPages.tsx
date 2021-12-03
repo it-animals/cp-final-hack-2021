@@ -20,16 +20,19 @@ import styled from "styled-components";
 import { requestService } from "../../service/request/request";
 import { RequestType } from "../../domain/request";
 import { useSnackbar } from "notistack";
+import { motion } from "framer-motion";
+import { upToDownFn } from "../lib/animations/upToDownAnimate";
 
 const RequestContainer = styled.div`
   width: 100%;
   min-height: 300px;
   display: flex;
+  row-gap: 20px;
   flex-wrap: wrap;
   justify-content: space-between;
 `;
 
-const Request = styled(Paper)`
+const Request = styled(motion(Paper))`
   width: 48%;
   min-height: 300px;
   padding: 20px;
@@ -58,6 +61,7 @@ export const RequestsPages: CT<unknown> = () => {
     if (userData.user) {
       load();
     }
+    //eslint-disable-next-line
   }, [userData.user]);
 
   return (
@@ -86,7 +90,7 @@ export const RequestsPages: CT<unknown> = () => {
         <Grid container xs={12} mt={2}>
           <RequestContainer>
             {data.map((item) => (
-              <Request>
+              <Request {...upToDownFn()}>
                 <Box display={"flex"} justifyContent={"space-between"}>
                   {item.project_id ? (
                     <Chip

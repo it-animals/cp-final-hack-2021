@@ -81,6 +81,7 @@ export const LoginPage: CT<unknown> = () => {
     if (userService.isAuth() && userData) {
       history.push("/");
     }
+    //eslint-disable-next-line
   }, []);
 
   const formSubmitHandler = async (values: {
