@@ -24,3 +24,6 @@ create-admin:
 	(cd backend && docker-compose exec php php yii tool/create-admin test@test.org test123)
 set-permissions:
 	(cd backend && chmod 0775 files && sudo chown $(USER):www-data files)
+git-pull:
+	git pull
+deploy: git-pull install-dependencies migrate
