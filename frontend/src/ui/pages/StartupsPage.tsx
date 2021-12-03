@@ -82,7 +82,8 @@ export const StartupsPage = () => {
   const [filterState, setFilterState] = useUrlState({
     status: "0",
     search: "",
-    type: "1",
+    type: "0",
+    sort: "-id",
     tags: "",
   });
 
@@ -92,8 +93,10 @@ export const StartupsPage = () => {
     try {
       const data = await projectService.list({
         status: Number(filterState.status!)! as ProjectStatus | 0,
-        type: Number(filterState.type) as ProjectType["type"],
+        type: Number(filterState.type) as ProjectType["type"] | 0,
         tags: filterState.tags,
+        search: filterState.search,
+        sort: filterState.sort,
       });
       setData(data.data.projects);
     } catch (e) {
@@ -132,23 +135,23 @@ export const StartupsPage = () => {
 
   useEffect(() => {
     loadTags();
+    setInputSearch(filterState.search);
   }, []);
 
   const changeSearchHandler = (
     e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>
   ) => {
-    setFilterState({ ...filterState, search: e.currentTarget.value });
+    setInputSearch(e.currentTarget.value);
   };
 
   const searchClickHandler = () => {
     if (!inputSearch.length) return;
-    // dispatch(filterPackage(inputSearch));
-    setExitSearch(true);
+    setFilterState({ ...filterState, search: inputSearch });
   };
 
   const clearSearchHandler = () => {
-    // dispatch(clearFilter());
     setInputSearch("");
+    setFilterState({ ...filterState, search: "" });
   };
 
   const ButtonWrapper = styled.div`
@@ -168,7 +171,7 @@ export const StartupsPage = () => {
               <SearchIcon sx={{ color: "second.main", mr: 1, my: 0.5 }} />
               <TextField
                 onChange={changeSearchHandler}
-                value={filterState.search}
+                value={inputSearch}
                 color={"primary"}
                 fullWidth
                 inputProps={{
@@ -225,16 +228,20 @@ export const StartupsPage = () => {
                 <FormControl component="fieldset">
                   <RadioGroup
                     aria-label="gender"
-                    defaultValue="female"
+                    onChange={(e, value) =>
+                      setFilterState({ ...filterState, sort: value })
+                    }
+                    value={filterState.sort}
+                    defaultValue={filterState.sort}
                     name="radio-buttons-group"
                   >
                     <FormControlLabel
-                      value="female"
+                      value="-id"
                       control={<Radio />}
                       label="Дате создания"
                     />
                     <FormControlLabel
-                      value="male"
+                      value="name"
                       control={<Radio />}
                       label="Названию"
                     />
@@ -252,6 +259,7 @@ export const StartupsPage = () => {
                     setFilterState({ ...filterState, type: String(value) });
                   }}
                 >
+                  <FormControlLabel value="0" control={<Radio />} label="Все" />
                   <FormControlLabel
                     value="1"
                     control={<Radio />}

@@ -2,8 +2,8 @@
 
 namespace app\modules\v1\controllers;
 
-use app\models\Tag;
-use app\models\TagSearch;
+use app\models\Team;
+use app\models\TeamSearch;
 use app\modules\v1\helpers\BehaviorHelper;
 use app\modules\v1\traits\GetUserTrait;
 use app\modules\v1\traits\OptionsActionTrait;
@@ -12,10 +12,10 @@ use yii\web\BadRequestHttpException;
 
 /**
  * @OA\Tag(
- *   name="Tag"
+ *   name="Team"
  * )
  */
-class TagController extends Controller
+class TeamController extends Controller
 {
     use OptionsActionTrait, GetUserTrait;
 
@@ -33,8 +33,8 @@ class TagController extends Controller
 
     /**
      * @OA\Get(
-     *   tags={"Tag"},
-     *   path="/v1/tag/index",
+     *   tags={"Team"},
+     *   path="/v1/team/index",
      *   security={{"bearerAuth"={}}},
      *   summary="",
      *   @OA\Response(
@@ -45,17 +45,17 @@ class TagController extends Controller
      */
     public function actionIndex()
     {
-        $searchModel = new TagSearch();
+        $searchModel = new TeamSearch();
         $dataProvider = $searchModel->search($this->request->queryParams);
         return [
-            'tags' => $dataProvider,
+            'teams' => $dataProvider,
         ];
     }
 
     /**
      * @OA\Post(
-     *   tags={"Tag"},
-     *   path="/v1/tag/create",
+     *   tags={"Team"},
+     *   path="/v1/team/create",
      *   security={{"bearerAuth"={}}},
      *   summary="",
      *   @OA\Response(
@@ -66,12 +66,12 @@ class TagController extends Controller
      */
     public function actionCreate()
     {
-        $model = new Tag();
+        $model = new Team();
         $model->loadDefaultValues();
         if ($this->request->isPost) {
             if ($model->load($this->request->post()) && $model->save()) {
                 return [
-                    'tag' => $model
+                    'team' => $model,
                 ];
             }
         }

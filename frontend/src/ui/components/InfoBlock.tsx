@@ -8,5 +8,9 @@ const Wrapper = styled(Paper)`
   background-color: white;
 `;
 export const InfoBlock: CT<unknown> = ({ children, className }) => {
-  return <Wrapper elevation={3}>{children}</Wrapper>;
+  return (
+    <Wrapper className={className} elevation={3}>
+      {children}
+    </Wrapper>
+  );
 };
