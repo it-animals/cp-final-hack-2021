@@ -93,6 +93,7 @@ class Team extends \yii\db\ActiveRecord
             'fio' => function (Team $model) {
                 return $model->user->fio;
             },
+            'is_owner' => 'is_owner',
         ];
     }
 }
