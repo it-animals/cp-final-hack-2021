@@ -16,7 +16,7 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import { Startap } from "../components/Startap";
+import { Startup } from "../components/Startup";
 import styled from "styled-components";
 import { _variables } from "../styles/_variables";
 import { hexToRgba } from "../styles/_mixin";
@@ -59,7 +59,7 @@ const TabCustom = styled(Tab)`
   }
 `;
 
-export const StartapsPage = () => {
+export const StartupsPage = () => {
   const [inputSearch, setInputSearch] = useState("");
   const [existSearch, setExitSearch] = useState(false);
 
@@ -139,18 +139,18 @@ export const StartapsPage = () => {
               <TabCustom label="Внедрение" />
             </TabList>
             <List id={"list"}>
-              <Startap />
-              <Startap />
-              <Startap />
-              <Startap />
-              <Startap />
-              <Startap />
-              <Startap />
-              <Startap />
-              <Startap />
-              <Startap />
-              <Startap />
-              <Startap />
+              <Startup />
+              <Startup />
+              <Startup />
+              <Startup />
+              <Startup />
+              <Startup />
+              <Startup />
+              <Startup />
+              <Startup />
+              <Startup />
+              <Startup />
+              <Startup />
             </List>
           </Grid>
           <Grid item xs={4} mt={4}>

@@ -5,11 +5,16 @@ import { Box, Button, Grid, Paper, TextField, Typography } from "@mui/material";
 import { ContentWrapper } from "../components/ContentWrapper";
 import { Logo } from "../components/Logo";
 import { useFormik } from "formik";
-import { Link as LinkSPA } from "react-router-dom";
+import { Link as LinkSPA, useHistory } from "react-router-dom";
 import { Link } from "@mui/material";
 import * as yup from "yup";
 import { motion } from "framer-motion";
 import { upToDownFn } from "../lib/animations/upToDownAnimate";
+import { userService } from "../../service/user/user";
+import { useAppDispatch, useAppSelector } from "../../service/store/store";
+import { selectUserData, setUserData } from "../../service/store/userSlice";
+import { useEffect, useState } from "react";
+import { useSnackbar } from "notistack";
 
 const Main = styled.main`
   width: 100%;
@@ -59,11 +64,39 @@ const validationSchema = yup.object().shape({
 });
 
 export const LoginPage: CT<unknown> = () => {
+  const dispatch = useAppDispatch();
+  const [isLoad, setLoad] = useState(false);
+  const history = useHistory();
+  const snackbar = useSnackbar();
+  const userData = useAppSelector(selectUserData);
+
+  useEffect(() => {
+    if (userService.isAuth() && userData) {
+      history.push("/");
+    }
+  }, []);
+
   const formSubmitHandler = async (values: {
     email: string;
     password: string;
   }) => {
-    console.log(values);
+    setLoad(true);
+
+    try {
+      const data = await userService.login(values);
+      userService.saveToken(data.data.jwt);
+      const infoUser = await userService.info(data.data.jwt);
+      dispatch(setUserData(infoUser.data.user));
+      snackbar.enqueueSnackbar("Вход выполнен", { variant: "success" });
+      setTimeout(() => {
+        history.push("/");
+      }, 700);
+    } catch (e) {
+      formik.setErrors({ password: "Неверный логин или пароль" });
+    } finally {
+      setLoad(false);
+      localStorage.removeItem("userEmail");
+    }
   };
 
   const formik = useFormik({
@@ -131,6 +164,7 @@ export const LoginPage: CT<unknown> = () => {
                         </Link>
                       </LinkSPA>
                       <Button
+                        disabled={isLoad}
                         size={"large"}
                         variant={"contained"}
                         color={"primary"}

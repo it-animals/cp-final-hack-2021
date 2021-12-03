@@ -22,7 +22,7 @@ export const RequestInterceptor: React.FC<unknown> = ({ children }) => {
         if (err.response) {
           if (
             err?.response?.status === 500 ||
-            err?.response?.status === 403 ||
+            // err?.response?.status === 403 ||
             err?.response?.status === 401
           ) {
             const { message } = err.response.data;

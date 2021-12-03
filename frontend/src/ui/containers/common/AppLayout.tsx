@@ -12,15 +12,15 @@ export const AppLayout: CT<unknown> = ({ children }) => {
   return (
     <>
       <GlobalStyle />
-      <ErrorBoundary>
-        {/*Отлов ошибок api */}
-        <RequestInterceptor>
-          <Router>
+      <Router>
+        <ErrorBoundary>
+          {/*  /!*Отлов ошибок api *!/*/}
+          <RequestInterceptor>
             {/*тема*/}
             <ThemeProvider theme={MUITheme}>
               {/*снекбары*/}
               <SnackbarProvider
-                autoHideDuration={5000}
+                autoHideDuration={2000}
                 maxSnack={3}
                 anchorOrigin={{
                   horizontal: "center",
@@ -33,9 +33,9 @@ export const AppLayout: CT<unknown> = ({ children }) => {
                 {children}
               </SnackbarProvider>
             </ThemeProvider>
-          </Router>
-        </RequestInterceptor>
-      </ErrorBoundary>
+          </RequestInterceptor>
+        </ErrorBoundary>
+      </Router>
     </>
   );
 };

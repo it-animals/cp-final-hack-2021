@@ -8,18 +8,34 @@ import { ForbiddenPage } from "./ui/pages/ForbiddenPage";
 import { useSnackbar } from "notistack";
 import { Button } from "@mui/material";
 import { LoginPage } from "./ui/pages/LoginPage";
-import { RegisterPage } from "./ui/components/RegisterPage";
-import { StartapsPage } from "./ui/pages/StartapsPage";
-import { StartapPage } from "./ui/pages/StartapPage";
+import { RegisterPage } from "./ui/pages/RegisterPage";
+import { StartupsPage } from "./ui/pages/StartupsPage";
+import { StartupPage } from "./ui/pages/StartupPage";
+import { useGlobalRequestConfiguration } from "./ui/containers/common/useGlobalRequestConfiguration";
+import { useAppSelector } from "./service/store/store";
+import { selectUserData } from "./service/store/userSlice";
+import { userService } from "./service/user/user";
 
 function App() {
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
+  useGlobalRequestConfiguration();
+  const userData = useAppSelector(selectUserData);
+
+  const protectedRoute =
+    (Route: (() => JSX.Element) | CT<unknown>) => (data: any) => {
+      if (!userData || !userService.isAuth()) return <Redirect to={"/login"} />;
+      return <Route />;
+    };
 
   return (
     <>
       <Switch>
-        <Route path={"/"} exact component={StartapsPage} />
-        <Route path={"/startap/:id"} exact component={StartapPage} />
+        <Route path={"/"} exact component={protectedRoute(StartupsPage)} />
+        <Route
+          path={"/startup/:id"}
+          exact
+          component={protectedRoute(StartupPage)}
+        />
         <Route path={"/registration"} exact component={RegisterPage} />
         <Route path={"/login"} exact component={LoginPage} />
         <Route path={"/error"} component={ErrorPage} />

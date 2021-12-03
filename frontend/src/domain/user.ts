@@ -9,7 +9,6 @@ export type UserDomainType = {
   id: id;
   email: email; // max 100
   fio: fio; //max 100,
-  avatar: string;
   role: UserRoleType;
 };
 

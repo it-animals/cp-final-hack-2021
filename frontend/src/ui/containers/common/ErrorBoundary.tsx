@@ -6,31 +6,22 @@ import { selectAppError } from "../../../service/store/application/appSlice";
 export const ErrorBoundary: React.FC<unknown> = ({ children }) => {
   const appError = useAppSelector(selectAppError);
   const history = useHistory();
+  console.log(history);
   const appErrors: { [key: number]: VoidFunction } = {
     "0": () => {
-      history.push({
-        pathname: "/error",
-      });
+      history.push("/error");
     },
     "404": () => {
-      history.push({
-        pathname: "/404",
-      });
+      history.push("/404");
     },
     "401": () => {
-      history.push({
-        pathname: "/logout",
-      });
+      history.push("/logout");
     },
     "500": () => {
-      history.push({
-        pathname: "/error",
-      });
+      history.push("/error");
     },
     "403": () => {
-      history.push({
-        pathname: "/403",
-      });
+      history.push("/403");
     },
   };
 

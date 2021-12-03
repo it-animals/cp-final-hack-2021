@@ -6,17 +6,24 @@ import {
   Button,
   Grid,
   Link,
+  MenuItem,
   Paper,
+  Select,
   TextField,
   Typography,
 } from "@mui/material";
 import { useFormik } from "formik";
-import { ContentWrapper } from "./ContentWrapper";
-import { Logo } from "./Logo";
-import { Link as LinkSPA } from "react-router-dom";
+import { ContentWrapper } from "../components/ContentWrapper";
+import { Logo } from "../components/Logo";
+import { Link as LinkSPA, useHistory } from "react-router-dom";
 import * as yup from "yup";
 import { motion } from "framer-motion";
 import { upToDownFn } from "../lib/animations/upToDownAnimate";
+import { useAppDispatch, useAppSelector } from "../../service/store/store";
+import { useEffect, useState } from "react";
+import { useSnackbar } from "notistack";
+import { userService } from "../../service/user/user";
+import { selectUserData, setUserData } from "../../service/store/userSlice";
 
 const Main = styled.main`
   width: 100%;
@@ -25,6 +32,7 @@ const Main = styled.main`
   display: flex;
   align-items: center;
   justify-content: center;
+
   &:after {
     width: 100%;
     filter: blur(0.2);
@@ -69,13 +77,36 @@ const validationSchema = yup.object().shape({
 });
 
 export const RegisterPage: CT<unknown> = () => {
+  const dispatch = useAppDispatch();
+  const [isLoad, setLoad] = useState(false);
+  const history = useHistory();
+  const snackbar = useSnackbar();
+  const userData = useAppSelector(selectUserData);
+  useEffect(() => {
+    if (userService.isAuth() && userData) {
+      history.push("/");
+    }
+  }, []);
   const formSubmitHandler = async (values: {
     email: string;
     fio: string;
     password: string;
-    confirmPassword: string;
+    role: number;
   }) => {
-    console.log(values);
+    setLoad(true);
+
+    try {
+      const data = await userService.register(values);
+      localStorage.setItem("userEmail", data.data.user.email);
+      snackbar.enqueueSnackbar("Успешная регистрация", { variant: "success" });
+      setTimeout(() => {
+        history.push("/login");
+      }, 700);
+    } catch (e) {
+      formik.setErrors({ email: "Такой пользователь уже существует" });
+    } finally {
+      setLoad(false);
+    }
   };
 
   const formik = useFormik({
@@ -84,6 +115,7 @@ export const RegisterPage: CT<unknown> = () => {
       fio: "",
       password: "",
       confirmPassword: "",
+      role: 3,
     },
     onSubmit: formSubmitHandler,
     validateOnChange: false,
@@ -157,6 +189,23 @@ export const RegisterPage: CT<unknown> = () => {
                       variant="outlined"
                     />
                   </Grid>
+                  <Grid item xs={12}>
+                    <Select
+                      labelId="demo-simple-select-label"
+                      id="role"
+                      value={formik.values.role}
+                      color={"primary"}
+                      fullWidth
+                      onChange={(e) => {
+                        formik.setFieldValue("role", e.target.value);
+                      }}
+                    >
+                      <MenuItem value={2}>
+                        Представитель транспорта Москвы
+                      </MenuItem>
+                      <MenuItem value={3}>Участник</MenuItem>
+                    </Select>
+                  </Grid>
                   <Grid justifyContent={"flex-end"} item xs={12}>
                     <Box
                       display={"flex"}
@@ -170,6 +219,7 @@ export const RegisterPage: CT<unknown> = () => {
                       </LinkSPA>
                       <Button
                         size={"large"}
+                        disabled={isLoad}
                         variant={"contained"}
                         color={"primary"}
                         type={"submit"}

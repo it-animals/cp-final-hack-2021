@@ -6,7 +6,7 @@ import React from "react";
 import { HeadingSection } from "../components/HeadingSection";
 import { Avatar } from "../components/Avatar";
 
-export const StartapPage: CT<unknown> = () => {
+export const StartupPage: CT<unknown> = () => {
   const theme = useTheme();
 
   return (
