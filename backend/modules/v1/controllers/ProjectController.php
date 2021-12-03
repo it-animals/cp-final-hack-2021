@@ -2,11 +2,13 @@
 
 namespace app\modules\v1\controllers;
 
+use app\models\Project;
 use app\models\ProjectSearch;
 use app\modules\v1\helpers\BehaviorHelper;
 use app\modules\v1\traits\GetUserTrait;
 use app\modules\v1\traits\OptionsActionTrait;
 use yii\rest\Controller;
+use yii\web\BadRequestHttpException;
 
 /**
  * @OA\Tag(
@@ -22,6 +24,9 @@ class ProjectController extends Controller
         return BehaviorHelper::api(parent::behaviors(), [
             'GET' => [
                 BehaviorHelper::AUTH_REQUIRED => ['index'],
+            ],
+            'POST' => [
+                BehaviorHelper::AUTH_REQUIRED => ['create'],
             ],
         ]);
     }
@@ -159,6 +164,15 @@ class ProjectController extends Controller
      *       type="string",
      *     ),
      *   ),
+     *   @OA\Parameter(
+     *     name="ProjectSearch[tags][]",
+     *     in="query",
+     *     description="Поиск по tags",
+     *     allowEmptyValue=true,
+     *     @OA\Schema(
+     *       type="integer",
+     *     ),
+     *   ),
      *   @OA\Response(
      *     response=200,
      *     description=""
@@ -172,5 +186,60 @@ class ProjectController extends Controller
         return [
             'projects' => $dataProvider,
         ];
+    }
+
+    /**
+     * @OA\Post(
+     *   tags={"Project"},
+     *   path="/v1/project/create",
+     *   summary="",
+     *   @OA\RequestBody(
+     *     @OA\MediaType(
+     *       mediaType="multipart/form-data",
+     *       @OA\Schema(
+     *         required={"name", "status", "type", "for_transport", "certification"},
+     *         @OA\Property(
+     *           property="name",
+     *           type="string",
+     *           description="",
+     *         ),
+     *         @OA\Property(
+     *           property="status",
+     *           type="integer",
+     *           description="",
+     *         ),
+     *         @OA\Property(
+     *           property="type",
+     *           type="integer",
+     *           description="",
+     *         ),
+     *         @OA\Property(
+     *           property="for_transport",
+     *           type="integer",
+     *           description="",
+     *         ),
+     *         @OA\Property(
+     *           property="certification",
+     *           type="integer",
+     *           description="",
+     *         ),
+     *       ),
+     *     ),
+     *   ),
+     *   @OA\Response(
+     *     response=200,
+     *     description=""
+     *   )
+     * )
+     */
+    public function actionCreate()
+    {
+        $model = new Project();
+        if ($model->load($this->request->post()) && $model->save()) {
+            return [
+                'project' => $model->toArray(),
+            ];
+        }
+        throw new BadRequestHttpException('Не удалось создать проект');
     }
 }
