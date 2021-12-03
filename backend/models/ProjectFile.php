@@ -3,6 +3,7 @@
 namespace app\models;
 
 use Yii;
+use yii\helpers\Url;
 use yii\web\UploadedFile;
 use yii\helpers\FileHelper;
 
@@ -131,5 +132,20 @@ class ProjectFile extends \yii\db\ActiveRecord
      */
     public function getPath(): string {
         return Yii::getAlias("@app/files/{$this->project_id}/{$this->id}.$this->extension");
+    }
+
+    public function fields()
+    {
+        return [
+            'id' => 'id',
+            'project_id' => 'project_id',
+            'name' => 'name',
+            'extension' => 'extension',
+            'content' => 'content',
+            'file' => 'file',
+            'url' => function (ProjectFile $model) {
+                return Url::to(['/project-file/view', 'id' => $model->id], true);
+            },
+        ];
     }
 }
