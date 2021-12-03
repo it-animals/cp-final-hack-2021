@@ -3,6 +3,7 @@
 namespace app\models;
 use app\models\Tag;
 use app\models\ProjectTag;
+use app\models\Team;
 
 use Yii;
 
@@ -74,6 +75,10 @@ class Project extends \yii\db\ActiveRecord
     
     public function afterSave($insert, $changedAttributes) {
         parent::afterSave($insert, $changedAttributes);
+        $identity = Yii::$app->user->getIdentity();
+        if($identity)  {
+            Team::addOwner($this, $identity->getUser());
+        }
         
         ProjectTag::deleteAllByProject($this);
         if($this->tagsRaw) {

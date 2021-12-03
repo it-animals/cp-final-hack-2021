@@ -5,6 +5,8 @@ namespace app\controllers;
 use app\models\Project;
 use app\models\ProjectSearch;
 use app\models\ProjectFileSearch;
+use app\models\TeamSearch;
+use app\models\User;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -61,6 +63,7 @@ class ProjectController extends Controller
     {
         $model = $this->findModel($id);
         $projectFileContent = $this->renderProjectFileIndex($model);
+        $teamContent = $this->renderTeamIndex($model);
         return $this->render('view', [
             'model' => $model,
             'statuses' => Project::getStatusList(),
@@ -68,6 +71,7 @@ class ProjectController extends Controller
             'transports' => Project::getTransportList(),
             'certifications' => Project::getCertificationList(),
             'projectFileContent' => $projectFileContent,
+            'teamContent' => $teamContent,
         ]);
     }
     
@@ -79,6 +83,17 @@ class ProjectController extends Controller
         return $this->renderPartial('/project-file/index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
+        ]);
+    }
+    
+    private function renderTeamIndex(Project $project) {
+        $searchModel = new TeamSearch();
+        $searchModel->project_id = $project->id;
+        $dataProvider = $searchModel->search($this->request->queryParams);
+        return $this->renderPartial('/team/index', [
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+            'users' => User::getList(),
         ]);
     }
 

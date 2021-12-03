@@ -63,7 +63,7 @@ class User extends ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id' => 'ИД',
+            'id' => 'Код',
             'email' => 'Email',
             'fio' => 'ФИО',
             'avatar' => 'Аватар',
@@ -88,5 +88,14 @@ class User extends ActiveRecord
             self::ROLE_MT => 'Представитель транспорта Москвы',
             self::ROLE_USER => 'Участник'
         ];
+    }
+    
+    public static function getList(): array {
+        $models = self::find()->orderBy('fio')->all();
+        $list = [];
+        foreach($models as $model) {
+            $list[$model->id] = $model->fio;            
+        }
+        return $list;
     }
 }
