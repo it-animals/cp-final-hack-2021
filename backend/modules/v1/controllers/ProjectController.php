@@ -202,6 +202,7 @@ class ProjectController extends Controller
      * @OA\Post(
      *   tags={"Project"},
      *   path="/v1/project/create",
+     *   security={{"bearerAuth"={}}},
      *   summary="",
      *   @OA\RequestBody(
      *     @OA\MediaType(
