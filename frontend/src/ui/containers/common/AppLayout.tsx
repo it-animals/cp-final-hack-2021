@@ -8,9 +8,11 @@ import { MUITheme } from "../../styles/_MUITheme";
 import { SnackbarProvider } from "notistack";
 import SnackbarCloseButton from "../../components/SnackbarCloseButton";
 import { useGlobalRequestConfiguration } from "./useGlobalRequestConfiguration";
+import { useLoadUserData } from "./useLoadUserData";
 
 export const AppLayout: CT<unknown> = ({ children }) => {
   useGlobalRequestConfiguration();
+  useLoadUserData();
   return (
     <>
       <GlobalStyle />
