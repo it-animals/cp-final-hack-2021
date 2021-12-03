@@ -89,4 +89,13 @@ class User extends ActiveRecord
             self::ROLE_USER => 'Участник'
         ];
     }
+    
+    public static function getList(): array {
+        $models = self::find()->orderBy('fio')->all();
+        $list = [];
+        foreach($models as $model) {
+            $list[$model->id] = $model->fio;            
+        }
+        return $list;
+    }
 }

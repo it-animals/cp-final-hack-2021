@@ -3,6 +3,8 @@
 namespace app\models;
 
 use Yii;
+use app\models\Project;
+use app\models\User;
 
 /**
  * This is the model class for table "team".
@@ -37,6 +39,8 @@ class Team extends \yii\db\ActiveRecord
             [['is_owner'], 'boolean'],
             [['project_id'], 'exist', 'skipOnError' => true, 'targetClass' => Project::class, 'targetAttribute' => ['project_id' => 'id']],
             [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['user_id' => 'id']],
+            [['project_id', 'user_id'], 'unique', 'targetAttribute' => ['project_id', 'user_id']],
+            [['project_id', 'is_owner'], 'unique', 'targetAttribute' => ['project_id', 'is_owner']],
         ];
     }
 
@@ -71,5 +75,15 @@ class Team extends \yii\db\ActiveRecord
     public function getUser()
     {
         return $this->hasOne(User::class, ['id' => 'user_id']);
+    }
+    
+    public static function addOwner(Project $project, User $user) {
+        if(!self::findOne(['project_id' => $project->id, 'user_id' => $user->id])) {
+            $model = new Team();
+            $model->project_id = $project->id;
+            $model->user_id = $user->id;
+            $model->is_owner = true;
+            $model->save();
+        }        
     }
 }

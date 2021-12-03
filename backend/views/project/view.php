@@ -11,6 +11,7 @@ use app\models\Project;
 /* @var $transports array */
 /* @var $certifications array */
 /* @var $projectFileContent string */
+/* @var $teamContent string */
 
 $this->title = $model->name;
 $this->params['breadcrumbs'][] = ['label' => 'Стартапы', 'url' => ['index']];
@@ -78,4 +79,5 @@ $this->params['breadcrumbs'][] = $this->title;
     ]) ?>
 
 </div>
+<?= $teamContent ?>
 <?= $projectFileContent ?>
