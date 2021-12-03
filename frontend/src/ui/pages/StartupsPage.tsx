@@ -40,6 +40,7 @@ import { useAppSelector } from "../../service/store/store";
 import { selectUserData } from "../../service/store/userSlice";
 import { userIsAdmin } from "../../domain/user";
 import { appConfig } from "../../config";
+import { Link } from "react-router-dom";
 
 const List = styled(motion.div)`
   display: flex;
@@ -75,6 +76,12 @@ const TabCustom = styled(Tab)`
   }
 `;
 
+const RequestButtonWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 40px;
+`;
 const StartupElem = motion(Startup);
 
 export const StartupsPage = () => {
@@ -230,7 +237,16 @@ export const StartupsPage = () => {
             </TabList>
             <List id={"list"}>
               {isLoad && <Loader height={260} />}
-              {!data.length && !isLoad && <NotFound />}
+              {!data.length && !isLoad && (
+                <>
+                  <NotFound />
+                  <RequestButtonWrapper>
+                    <Link to={"/request"}>
+                      <Button variant={"contained"}>Отправить запрос</Button>
+                    </Link>
+                  </RequestButtonWrapper>
+                </>
+              )}
               {data &&
                 !!data.length &&
                 data.map((item) => <StartupElem key={item.id} {...item} />)}
