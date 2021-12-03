@@ -11,6 +11,7 @@ import {
   Paper,
   Radio,
   RadioGroup,
+  Skeleton,
   Tab,
   Tabs,
   TextField,
@@ -32,6 +33,7 @@ import useUrlState from "@ahooksjs/use-url-state";
 import { motion } from "framer-motion";
 import { rightToLeftAnimation } from "../lib/animations/rightToLeftAnimation";
 import { upToDownFn } from "../lib/animations/upToDownAnimate";
+import { tagsService } from "../../service/tag/tags";
 
 const List = styled(motion.div)`
   display: flex;
@@ -74,11 +76,14 @@ export const StartupsPage = () => {
   const [existSearch, setExitSearch] = useState(false);
   const [isLoad, setLoad] = useState(false);
   const [data, setData] = useState<ProjectType[]>([]);
+  const [tagData, setTagData] = useState<ProjectType["tags"]>([]);
   const snackbar = useSnackbar();
 
   const [filterState, setFilterState] = useUrlState({
     status: "0",
+    search: "",
     type: "1",
+    tags: "",
   });
 
   const load = async () => {
@@ -88,6 +93,7 @@ export const StartupsPage = () => {
       const data = await projectService.list({
         status: Number(filterState.status!)! as ProjectStatus | 0,
         type: Number(filterState.type) as ProjectType["type"],
+        tags: filterState.tags,
       });
       setData(data.data.projects);
     } catch (e) {
@@ -98,14 +104,40 @@ export const StartupsPage = () => {
     setLoad(false);
   };
 
+  const loadTags = async () => {
+    try {
+      const data = await tagsService.index();
+      setTagData(data.data.tags);
+    } catch (e) {
+      snackbar.enqueueSnackbar("Ошибка загрузки тегов. Попробуйте еще раз", {
+        variant: "warning",
+      });
+    }
+  };
+
+  const clearTagHandler = (id: number | string) => {
+    const tags = filterState.tags.split(",");
+    const filtered = tags.filter((item: string) => item !== String(id));
+    setFilterState({ ...filterState, tags: filtered.join(",") });
+  };
+  const addTag = (id: string | number) => {
+    const data = filterState.tags.length > 0 ? filterState.tags.split(",") : [];
+
+    setFilterState({ ...filterState, tags: [...data, String(id)].join(",") });
+  };
+
   useEffect(() => {
     load();
   }, [filterState]);
 
+  useEffect(() => {
+    loadTags();
+  }, []);
+
   const changeSearchHandler = (
     e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>
   ) => {
-    setInputSearch(e.currentTarget.value);
+    setFilterState({ ...filterState, search: e.currentTarget.value });
   };
 
   const searchClickHandler = () => {
@@ -126,7 +158,7 @@ export const StartupsPage = () => {
     align-items: flex-end;
     justify-content: space-between;
   `;
-
+  console.log(filterState.tags.includes(4));
   return (
     <>
       <PageTemplate>
@@ -136,7 +168,7 @@ export const StartupsPage = () => {
               <SearchIcon sx={{ color: "second.main", mr: 1, my: 0.5 }} />
               <TextField
                 onChange={changeSearchHandler}
-                value={inputSearch}
+                value={filterState.search}
                 color={"primary"}
                 fullWidth
                 inputProps={{
@@ -246,6 +278,37 @@ export const StartupsPage = () => {
                     label="Цифровые технологии в транспорте"
                   />
                 </RadioGroup>
+              </FilterBox>
+            </Grid>
+            <Grid item xs={12} mt={1}>
+              <FilterBox title={"Теги"}>
+                {tagData.length > 0 && (
+                  <FormGroup>
+                    {tagData.map((item) => (
+                      <FormControlLabel
+                        control={
+                          <Checkbox
+                            checked={filterState.tags.includes(item.id)}
+                            onChange={(event, checked) =>
+                              checked
+                                ? addTag(item.id)
+                                : clearTagHandler(item.id)
+                            }
+                          />
+                        }
+                        label={item.name}
+                      />
+                    ))}
+                  </FormGroup>
+                )}
+                {tagData.length === 0 && (
+                  <Grid item xs={12}>
+                    <Skeleton width={"50%"} height={"35px"} />
+                    <Skeleton width={"50%"} height={"35px"} />
+                    <Skeleton width={"50%"} height={"35px"} />
+                    <Skeleton width={"50%"} height={"35px"} />
+                  </Grid>
+                )}
               </FilterBox>
             </Grid>
           </Grid>
