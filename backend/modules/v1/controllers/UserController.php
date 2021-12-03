@@ -128,7 +128,7 @@ class UserController extends Controller
         $request = Yii::$app->request;
 
         $form = new LoginForm();
-        $form->username = $request->getBodyParam('email');
+        $form->username = trim(mb_strtolower($request->getBodyParam('email'), 'UTF-8'));
         $form->password = $request->getBodyParam('password');
 
         if (!$form->login()) {
