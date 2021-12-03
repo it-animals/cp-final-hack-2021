@@ -1,0 +1,11 @@
+version: '2'
+services:
+  node:
+    image: node:14-slim
+    working_dir: /app
+    volumes:
+      - ./:/app:delegated
+    command: yarn serve
+    restart: always
+    ports:
+      - '8001:5000'

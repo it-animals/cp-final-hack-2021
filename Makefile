@@ -1,17 +1,22 @@
-init: down-clear build up install-dependencies migrate create-admin set-permissions
+init: down-clear build yarn-build up install-dependencies migrate create-admin set-permissions
 restart: down up
 build:
-	(cd backend && docker-compose build)
+	(cd backend && docker-compose build) && \
+	(cd frontend && docker-compose build)
 up:
-	(cd backend && docker-compose up -d)
+	(cd backend && docker-compose up -d) && \
+	(cd frontend && docker-compose up -d)
 down:
-	(cd backend && docker-compose down --remove-orphans)
+	(cd backend && docker-compose down --remove-orphans) && \
+	(cd frontend && docker-compose down --remove-orphans)
 down-clear:
 	(cd backend && docker-compose down -v --remove-orphans) && \
+	(cd frontend && docker-compose down -v --remove-orphans) && \
 	(cd backend/files && sudo rm -vrf ./*) && \
 	(cd backend/runtime && sudo rm -vrf ./*)
 status:
-	(cd backend && docker-compose ps -a)
+	(cd backend && docker-compose ps -a) && \
+	(cd frontend && docker-compose ps -a)
 bash:
 	(cd backend && docker-compose exec php bash)
 install-dependencies:
@@ -27,3 +32,6 @@ set-permissions:
 git-pull:
 	git pull
 deploy: git-pull install-dependencies migrate
+yarn-build:
+	(cd frontend && docker-compose run --rm node yarn install) && \
+	(cd frontend && docker-compose run --rm node yarn build)
