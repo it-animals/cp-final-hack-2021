@@ -23,6 +23,9 @@ class TagController extends Controller
             'GET' => [
                 BehaviorHelper::AUTH_REQUIRED => ['index'],
             ],
+            'POST' => [
+                BehaviorHelper::AUTH_REQUIRED => ['create'],
+            ],
         ]);
     }
 
@@ -39,6 +42,27 @@ class TagController extends Controller
      * )
      */
     public function actionIndex()
+    {
+        $searchModel = new TagSearch();
+        $dataProvider = $searchModel->search($this->request->queryParams);
+        return [
+            'tags' => $dataProvider,
+        ];
+    }
+
+    /**
+     * @OA\Post(
+     *   tags={"Tag"},
+     *   path="/v1/tag/create",
+     *   security={{"bearerAuth"={}}},
+     *   summary="",
+     *   @OA\Response(
+     *     response=200,
+     *     description=""
+     *   )
+     * )
+     */
+    public function actionCreate()
     {
         $searchModel = new TagSearch();
         $dataProvider = $searchModel->search($this->request->queryParams);
