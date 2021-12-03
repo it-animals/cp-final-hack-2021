@@ -93,6 +93,15 @@ class ProjectController extends Controller
      *     ),
      *   ),
      *   @OA\Parameter(
+     *     name="ProjectSearch[search]",
+     *     in="query",
+     *     description="Поиск по всему",
+     *     allowEmptyValue=true,
+     *     @OA\Schema(
+     *       type="string",
+     *     ),
+     *   ),
+     *   @OA\Parameter(
      *     name="ProjectSearch[status]",
      *     in="query",
      *     description="Поиск по status",
